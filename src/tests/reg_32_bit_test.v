@@ -1,8 +1,8 @@
 module reg_32_bit_test;
     reg [31:0] in;
-    reg clk, load_enable, clr;
+    reg clk, load_enable;
     wire [31:0] out;
-    reg_32_bit register(out, in, load_enable, clk, clr);
+    reg_32_bit register(out, in, load_enable, clk);
 
     initial #100 $finish;
 
@@ -12,7 +12,6 @@ module reg_32_bit_test;
     end
 
     initial fork
-        clr = 1'b1; #1 clr = ~clr; #2 clr = ~clr; 
         in = 32'h0000000A; #30 in = 32'h0000000B; #40 in = 32'h0000000C; 
         load_enable = 1'b0; #15 load_enable = 1'b1; #40 load_enable = 1'b0;  
     join

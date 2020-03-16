@@ -1,8 +1,11 @@
-module multiplexer_16_to_1(output reg [31:0] mult_output, input [31:0] data0, data1, data2, data3, data4, data5, data6, data7
-    , data8, data9, data10, data11, data12, data13, data14, data15, input [3:0] mult_select);
-
-    always @(mult_select, data0, data1, data2, data3, data4, data5, data6, data7
-    , data8, data9, data10, data11, data12, data13, data14, data15)
+module multiplexer_16_to_1(output reg [31:0] mult_output, 
+    input [31:0] data0, data1, data2, data3, data4, data5, data6, data7,
+    data8, data9, data10, data11, data12, data13, data14, data15, 
+    input [3:0] mult_select
+);
+    always @(mult_select, data0, data1, data2, data3, data4, data5, 
+    data6, data7, data8, data9, data10, data11, data12, data13, 
+    data14, data15)
         case(mult_select)
             4'd0 : mult_output <= data0;
             4'd1 : mult_output <= data1;
