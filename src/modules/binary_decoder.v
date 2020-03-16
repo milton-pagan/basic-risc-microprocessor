@@ -1,6 +1,6 @@
 module binary_decoder(output reg [15:0] decoder_output, input [3:0] decoder_control, input load_enable);
 
-always @(load_enable)
+always @(load_enable, decoder_control)
     if(load_enable)
         case(decoder_control)
             4'd0 : decoder_output <= 16'b1000000000000000;

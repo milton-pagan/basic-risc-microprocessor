@@ -18,7 +18,8 @@ module reg_32_bit_test;
     join
 
     initial begin
-        $display (" input        load_enable        output        time");
+        $display("\n*** 32 BIT REGISTER TEST ***");
+        $display ("\n input        load_enable        output        time");
         $monitor(" %h        %b        %h        %d", in, load_enable, out, $time);
     end 
 endmodule
