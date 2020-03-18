@@ -1,10 +1,10 @@
 /* 	
 	ICOM4215 S20 PROJECT
 	ALU Implementation
+	
 	Group:
-		Dionel Martínez, dionel.martinez@upr.edu
+		Dionel Martínez, dionel.martinez@upr.edu (Author)
 		Milton E. Pagán, milton.pagan1@upr.edu
-
 */
 
 module ALU(	input [31:0] A,B,				// 32-bit Inputs
@@ -53,8 +53,8 @@ module ALU(	input [31:0] A,B,				// 32-bit Inputs
 		
 			ADDC:
 			begin
-				result = A + B + {31'b1,Cin};
-				temp = {1'b0, A} + {1'b0, B} + {31'b0, Cin};
+				result = A + B + {31'b0,Cin};
+				temp = {1'b0, A} + {1'b0, B} + {32'b0, Cin};
 				C = temp[32];
 				V = temp[31:0] > 32'b01111111_11111111_11111111_11111111;
 				Z = result == 32'b0;
@@ -68,6 +68,7 @@ module ALU(	input [31:0] A,B,				// 32-bit Inputs
 				V = temp[31:0] + {32'b1} < 32'b10000000_00000000_00000000_00000001;
 				Z = result == 32'b0;
 				N = result[31] == 1'b1;
+				C = 1'b0;
 			end
 			
 			AND:
@@ -75,6 +76,7 @@ module ALU(	input [31:0] A,B,				// 32-bit Inputs
 				result = A & B;
 				Z = result == 32'b0;
 				N = result[31] == 1'b1;
+				C = 1'b0;
 			end
 			
 			NAND:
@@ -82,6 +84,7 @@ module ALU(	input [31:0] A,B,				// 32-bit Inputs
 				result = ~(A & B);
 				Z = result == 32'b0;
 				N = result[31] == 1'b1;
+				C = 1'b0;
 			end
 			
 			OR:
@@ -89,6 +92,7 @@ module ALU(	input [31:0] A,B,				// 32-bit Inputs
 				result = A | B;
 				Z = result == 32'b0;
 				N = result[31] == 1'b1;
+				C = 1'b0;
 			end
 			
 			NOR:
@@ -96,6 +100,7 @@ module ALU(	input [31:0] A,B,				// 32-bit Inputs
 				result = ~(A | B);
 				Z = result == 32'b0;
 				N = result[31] == 1'b1;
+				C = 1'b0;
 			end
 			
 			XOR:
@@ -103,6 +108,7 @@ module ALU(	input [31:0] A,B,				// 32-bit Inputs
 				result = A ^ B;
 				Z = result == 32'b0;
 				N = result[31] == 1'b1;
+				C = 1'b0;
 			end
 			
 			XNOR:
@@ -110,6 +116,7 @@ module ALU(	input [31:0] A,B,				// 32-bit Inputs
 				result = ~(A ^ B);
 				Z = result == 32'b0;
 				N = result[31] == 1'b1;
+				C = 1'b0;
 			end
 			
 			LSL:
@@ -118,11 +125,13 @@ module ALU(	input [31:0] A,B,				// 32-bit Inputs
 				C = A[31]; 
 				Z = result == 32'b0;
 				N = result[31] == 1'b1;
+				C = 1'b0;
 			end
 			
 			LSR:
 			begin
-				result = A >> 1;			
+				result = A >> 1;
+				C = A[0];				
 				Z = result == 32'b0;
 				N = result[31] == 1'b1;
 			end
@@ -132,6 +141,7 @@ module ALU(	input [31:0] A,B,				// 32-bit Inputs
 				result = {A[30:0], A[31]};			
 				Z = result == 32'b0;
 				N = result[31] == 1'b1;
+				C = 1'b0;
 			end
 			
 			RR:
@@ -139,6 +149,7 @@ module ALU(	input [31:0] A,B,				// 32-bit Inputs
 				result = {A[0], A[31:1]};			
 				Z = result == 32'b0;
 				N = result[31] == 1'b1;
+				C = 1'b0;
 			end
 			
 			NOT:
@@ -146,6 +157,7 @@ module ALU(	input [31:0] A,B,				// 32-bit Inputs
 				result = ~A;
 				Z = result == 32'b0;
 				N = result[31] == 1'b1;
+				C = 1'b0;
 			end
 			
 			TwoC:
@@ -153,6 +165,7 @@ module ALU(	input [31:0] A,B,				// 32-bit Inputs
 				result = 32'b0 - A;
 				Z = result == 32'b0;
 				N = result[31] == 1'b1;
+				C = 1'b0;
 			end
 			
 			REM:
@@ -160,6 +173,7 @@ module ALU(	input [31:0] A,B,				// 32-bit Inputs
 				result = A;
 				Z = result == 32'b0;
 				N = result[31] == 1'b1;
+				C = 1'b0;
 			end
 			
 		endcase		
