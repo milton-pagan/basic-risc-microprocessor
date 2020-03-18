@@ -1,32 +1,39 @@
+/* 	
+	ICOM4215 S20 PROJECT
+	TESTER FOR ALU
+	
+	Group:
+		Dionel Martínez, dionel.martinez@upr.edu (Author)
+		Milton E. Pagán, milton.pagan1@upr.edu
+*/
+
 module alu_test;
 
 	// Inputs
-	reg [3:0] op; 				// Operation and Condition Codes Register
-	reg signed [31:0] A,B;
-	reg Cin;
+	reg [3:0] op; 					// Operations Register
+	reg signed [31:0] A,B;			// Operands
+	reg Cin;						// Input Carry
 	
 	// Outputs
-	wire signed [31:0] result;
-	wire C,N,V,Z;
+	wire signed [31:0] result;		// Result of Operation
+	wire C,N,V,Z;					// Condition Codes
 
 	// ALU Initialization
-	ALU alu(A,					// Input A
-			B,					// Input B
-			Cin,				// Input Carry
-			op,					// Operation
-			result,				// Result Register Output
-			C,N,V,Z);			// Condition Codes Output
+	ALU alu(A,B,Cin,op,result,C,N,V,Z);
 
-	initial #500 $finish;		// Simulation Time
+	initial #500 $finish;			// Simulation Time
 	
-	// Print Test Header
-	initial $display("\n|-----------------------------------------------------------------------STARTING TEST-----------------------------------------------------------------------|");
+	// Starting Test
+	initial $display("\n|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--STARTING TEST--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|");
 
-	// Testing each operation w/o overflow
-	initial fork								// Testing Z-flag
+	// Testing operations w/o overflow
+	initial $display("\n|--------------------------------------------------------------TESTING OPERATIONS W/O OVERFLOW--------------------------------------------------------------|");
+	
+		// Testing Z-flag
+	initial fork
 		A = 32'b0;
 		B = 32'b0;
-		Cin = 1'b0;
+		Cin = 1'b1;
 		op = 4'b0;
 	join
 	
@@ -37,13 +44,14 @@ module alu_test;
 	
 	initial #25 repeat (15) #10 
 		fork
-			Cin = 1'b1;							// Testing Addition with Input Carry
 			A += 32'b1010;	
 			B += 32'b101;
 			op += 4'b1;
 		join
 	
 	// Testing overflow in addition
+	initial #200 $display("\n|----------------------------------------------------------------TESTING OVERFLOW IN ADDITION---------------------------------------------------------------|\n");
+
 	initial #200 begin
 		A = 32'b01111111_11111111_11111111_11111101;			
 		B = 32'b10;
@@ -53,6 +61,8 @@ module alu_test;
 	initial #210 repeat (1) #10 A += B;
 
 	// Testing overflow in subtraction
+	initial #250 $display("\n|---------------------------------------------------------------TESTING OVERFLOW IN SUBTRACTION-------------------------------------------------------------|\n");
+
 	initial #250 begin
 		A = 32'b10000000_00000000_00000000_00000010;			
 		B = 32'b10;
@@ -66,5 +76,8 @@ module alu_test;
 		$display("\n OPER \t  A(dec) \t      A(bin) \t\t\t B(dec) \t      B(bin) \t\t   Result(dec) \t\t    Result(bin)            C  N  V  Z");
 		$monitor("  %d %d  %b  %d  %b  %d  %b  %b  %b  %b  %b",op,A,A,B,B,result,result,C,N,V,Z);
 	end
+	
+	//Test Finished
+	initial #320 $display("\n|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--TEST FINISHED--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|\n");
 
 endmodule
