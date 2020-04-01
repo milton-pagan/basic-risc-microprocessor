@@ -1,10 +1,18 @@
 module register_file_test;
+    // Outputs
+
     wire [31:0] port_a, port_b;
+
+    // Inputs
+
     reg[3:0] a_select, b_select;
-    reg[31:0] data_in;
+    reg[31:0] port_c;
     reg[3:0] decoder_control;
     reg load_enable, clk;
-    register_file register_file(port_a, port_b, a_select, b_select, data_in, decoder_control, load_enable, clk);
+
+    // Modules
+
+    register_file register_file(port_a, port_b, a_select, b_select, port_c, decoder_control, load_enable, clk);
 
     initial #500 $finish;
 
@@ -13,38 +21,60 @@ module register_file_test;
         repeat(500) #5 clk = ~clk;
     end
 
+    // Main test
 
     initial fork
-        // Write to Reg 0 and select in Port_A 
-        data_in = 32'h00000001;
-        #10 load_enable = 1'b1;
+        // Write into all 16 registers
+        load_enable = 4'd1;
+        port_c = 32'd0;
         decoder_control = 4'd0;
-        #15 a_select = 4'd0;
+        
+        repeat(15) #10
+        begin
+            decoder_control = decoder_control + 4'd1;
+            port_c = port_c + 32'd1;
+        end
 
-        //Try changing contents of Reg 0 while load_enable is still on
-        #20 data_in = 32'h0000000B;
+        /*  Verify register content through Ports A and B
+            Even register will be shown on Port A and odd ones on Port B
+        */
 
-        // Try writing to same register but with load_enable off
-        #30 data_in = 32'h0000000A;
-        #30 load_enable = 1'b0;
+        #160 
+        begin
+            load_enable <= 4'd0;
+            port_c <= 32'd0;
+            decoder_control = 4'd0;
 
-        // Write to Reg 7 and select in Port_B
-        #32 load_enable = 1'b1; #36 load_enable = 1'b0;
-        #30 decoder_control = 4'd7;
-        #35 b_select = 4'd7;
+            a_select <= 16'd0;
+            b_select <= 16'd1;
+        end
+        #160 
+        repeat(7) #10
+        begin
+            a_select = a_select + 16'd2;
+            b_select = b_select + 16'd2;
+        end
 
-        // Write to Reg 12 and select in both Ports
-        #40 data_in = 32'h0000000C;
-        #40 decoder_control = 4'd12; 
-        #45 a_select = 4'd12;
-        #45 b_select = 4'd12;
-        #43 load_enable = 1'b1;
+        // Change value in R10 and select in Port A
+        #240
+        begin
+            port_c <= 32'd50;
+            decoder_control <= 4'd10;
+            load_enable <= 1;
+            a_select <= 4'd10;
+        end
+        
+
     join
 
+    // Monitoring
 
     initial begin
+        $dumpfile("bin/dumpfiles/register_file_test.vcd");
+        $dumpvars(0, register_file_test);
+
         $display("\n*** REGISTER FILE TEST ***");
-        $display ("\ndata_in  decoder_control  load_enable  a_select  b_select  port_a  port_b                     time");
-        $monitor("%h     %b             %b         %b      %b   %h %h  %d", data_in, decoder_control, load_enable, a_select, b_select, port_a, port_b, $time);
+        $display ("\n      port_c decoder_control load_enable a_select b_select     port_a    port_b                 time");
+        $monitor("%d         %d             %b         %d      %d   %d %d  %d", port_c, decoder_control, load_enable, a_select, b_select, port_a, port_b, $time);
     end 
 endmodule

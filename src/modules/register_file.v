@@ -1,7 +1,7 @@
 module register_file(
     output [31:0] port_a, port_b, 
     input[3:0] a_select, b_select,
-    input[31:0] data_in,
+    input[31:0] port_c,
     input[3:0] decoder_control,
     input load_enable,
     input clk
@@ -23,7 +23,7 @@ module register_file(
         begin
             reg_32_bit reg_i(
                 reg_to_mult[15-i]
-                , data_in
+                , port_c
                 , decoder_to_reg[i]
                 , clk
             );
