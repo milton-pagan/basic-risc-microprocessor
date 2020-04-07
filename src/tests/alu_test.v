@@ -3,10 +3,10 @@
 	TESTER FOR ALU
 	
 	Group:
-		Dionel Martínez, dionel.martinez@upr.edu (Author)
-		Milton E. Pagán, milton.pagan1@upr.edu
+		Dionel Martï¿½nez, dionel.martinez@upr.edu (Author)
+		Milton E. Pagï¿½n, milton.pagan1@upr.edu
 */
-
+`include "src/modules/alu.v"
 module alu_test;
 
 	// Inputs

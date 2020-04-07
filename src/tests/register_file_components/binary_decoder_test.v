@@ -1,3 +1,4 @@
+`include "src/modules/register_file_components/binary_decoder.v"
 module binary_decoder_test;
     reg [3:0]in;
     reg load_enable;

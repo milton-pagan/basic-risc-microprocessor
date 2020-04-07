@@ -1,3 +1,4 @@
+`include "src/modules/register_file_components/multiplexer_16_to_1.v"
 module multiplexer_16_to_1_test;
     wire[31:0] out;
     reg[3:0] control;

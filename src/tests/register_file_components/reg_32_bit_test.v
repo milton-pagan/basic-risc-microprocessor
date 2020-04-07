@@ -1,3 +1,5 @@
+`include "src/modules/register_file_components/reg_32_bit.v"
+
 module reg_32_bit_test;
     reg [31:0] in;
     reg clk, load_enable;
