@@ -10,7 +10,7 @@
 module alu_test;
 
 	// Inputs
-	reg [3:0] op; 					// Operations Register
+	reg [4:0] op; 					// Operations Register
 	reg signed [31:0] A,B;			// Operands
 	reg Cin;						// Input Carry
 	
@@ -42,7 +42,7 @@ module alu_test;
 		B = 32'b1100101;
 	join
 	
-	initial #25 repeat (15) #10 
+	initial #25 repeat (23) #10 
 		fork
 			A += 32'b1010;	
 			B += 32'b101;
@@ -50,34 +50,34 @@ module alu_test;
 		join
 	
 	// Testing overflow in addition
-	initial #200 $display("\n|----------------------------------------------------------------TESTING OVERFLOW IN ADDITION---------------------------------------------------------------|\n");
+	initial #270 $display("\n|----------------------------------------------------------------TESTING OVERFLOW IN ADDITION---------------------------------------------------------------|\n");
 
-	initial #200 begin
+	initial #300 begin
 		A = 32'b01111111_11111111_11111111_11111101;			
 		B = 32'b10;
 		op = 4'b0;
 	end
 	
-	initial #210 repeat (1) #10 A += B;
+	initial #310 repeat (1) #10 A += B;
 
 	// Testing overflow in subtraction
-	initial #250 $display("\n|---------------------------------------------------------------TESTING OVERFLOW IN SUBTRACTION-------------------------------------------------------------|\n");
+	initial #350 $display("\n|---------------------------------------------------------------TESTING OVERFLOW IN SUBTRACTION-------------------------------------------------------------|\n");
 
-	initial #250 begin
+	initial #360 begin
 		A = 32'b10000000_00000000_00000000_00000010;			
 		B = 32'b10;
 		op = 4'b10;
 	end
 	
-	initial #300 repeat (1) #5 A -= B;
+	initial #400 repeat (1) #5 A -= B;
 	
 	// Results Output
 	initial begin
-		$display("\n OPER \t  A(dec) \t      A(bin) \t\t\t B(dec) \t      B(bin) \t\t   Result(dec) \t\t    Result(bin)            C  N  V  Z");
+		$display("\n OPER \t  A(dec) \t      A(bin) \t\t\t B(dec) \t      B(bin) \t\t   Result(dec) \t\t    Result(bin)           C  N  V  Z");
 		$monitor("  %d %d  %b  %d  %b  %d  %b  %b  %b  %b  %b",op,A,A,B,B,result,result,C,N,V,Z);
 	end
 	
 	//Test Finished
-	initial #320 $display("\n|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--TEST FINISHED--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|\n");
+	initial #420 $display("\n|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--TEST FINISHED--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|\n");
 
 endmodule
