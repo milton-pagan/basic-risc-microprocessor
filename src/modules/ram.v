@@ -19,7 +19,7 @@ always @(enable, read_write)
         mfc <= 1'b0;
         case(data_length)
             BYTE:
-            begin #5
+            begin
                 if (read_write)
                 begin
                     data_out = 0;
@@ -32,7 +32,7 @@ always @(enable, read_write)
                 end
             end
             HALFWORD:
-            begin #5
+            begin
                 if (read_write)
                 begin
                     data_out = 0;
@@ -47,7 +47,7 @@ always @(enable, read_write)
                 end
             end
             WORD:
-            begin #5
+            begin
                 if (read_write)
                 begin
                     data_out[31:24]   = memory[address];
@@ -69,7 +69,7 @@ always @(enable, read_write)
                 if (read_write)
                 begin
                     temp = address;
-                    repeat(2) #5
+                    repeat(2)
                     begin
                     data_out[31:24]   = memory[temp];
                     data_out[23:16]  = memory[temp + 1];
@@ -82,7 +82,7 @@ always @(enable, read_write)
             else
             begin
                 temp = address;
-                repeat(2) #5
+                repeat(2)
                 begin
                     memory[temp]     = data_in[31:24];
                     memory[temp + 1] = data_in[23:16];
