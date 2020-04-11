@@ -13,7 +13,7 @@ parameter DOUBLEWORD = 2'd3;
 integer temp;
 
 reg [7:0] memory[0:511];
-always @(enable, read_write)
+always @(enable, read_write, address, data_in, data_length)
     if (enable)
     begin
         mfc <= 1'b0;
