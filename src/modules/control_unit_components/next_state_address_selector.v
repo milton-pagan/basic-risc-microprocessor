@@ -27,7 +27,7 @@ always @(N, sts) begin
         
         3'b111: begin
             if (!sts) mux_select = 2'b01;
-            else    mux_select  = 2'b00;
+            else    mux_select  = 2'b10;
         end
     endcase
 end
