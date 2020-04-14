@@ -4,7 +4,7 @@ module microstore(output reg [33:0] out,
                   input [9:0] next_state);
 
 /*
-    Contains control signal for all bits. **state_info[0] corresponds to State 0, state_info[1] to State 1, etc.**
+    state_info contains control signal bits for all states. **state_info[0] corresponds to State 0, state_info[1] to State 1, etc.**
     **MUST FILL UNUSED STATES WITH ZEROS SO ARRAY POSITIONS CORRESPOND TO THEIR STATE**
 */
 parameter[0:34 * `NUM_STATES - 1] state_info = {     
