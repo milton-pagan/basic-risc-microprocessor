@@ -24,7 +24,7 @@ module control_register_test();
     wire [5:0] cr;
     
     // Inputs
-    reg clk;
+    reg clk, reset;
     wire [33:0] in;
     reg[9:0] next_state;
     
@@ -49,19 +49,20 @@ module control_register_test();
     cr,
     clk,
     in);
-    microstore microstore(in, next_state);
+    microstore microstore(in, next_state, reset);
     
-    initial #100 $finish;
+    initial #500 $finish;
     
     initial begin
-        clk                = 1'b0;
+        clk                = 1;
         repeat(100) #5 clk = ~clk;
     end
     
     initial
     begin
-        next_state = 9'd0;
-        #10 next_state = 9'd4;
+        reset = 1;
+        #5 next_state = 9'd4;
+        #5 reset = 0;
         #10 next_state = 9'd20; 
     end
     

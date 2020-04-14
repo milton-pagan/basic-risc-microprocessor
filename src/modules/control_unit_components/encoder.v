@@ -10,7 +10,7 @@ begin
     // *** STORE ***
     if (instruction[20] == 0)
     begin
-        // Store Immediate Offset
+        // ! Store Immediate Offset
         if (instruction[27:25] == 3'b010)      
         begin
             // Offset/Pre-Indexed
@@ -25,17 +25,17 @@ begin
                         // Add
                         if(instruction[23] == 1'b1)
                         begin
-                            
+                            state_number = 10'd20;
                         end
                         
                         // Subtract
                         else
                         begin
-                            
+                            state_number = 10'd30;
                         end
                     end
 
-                    // Word
+                    // Word --> TO BE IMPLEMENTED
                     else                                    
                     begin
                     
@@ -48,28 +48,142 @@ begin
                     // Unsigned Byte
                     if(instruction[22] == 1'b1)             
                     begin
-                
+                        // Add
+                        if(instruction[23] == 1'b1)
+                        begin
+                            state_number = 10'd22;
+                        end
+                        
+                        // Subtract
+                        else
+                        begin
+                            state_number = 10'd32;
+                        end
                     end
 
-                    // Word
-                    else                                   
+                    // Word --> TO BE IMPLEMENTED
+                    else                                    
                     begin
                     
-                    end    
+                    end   
                 end
             end
 
             // Post-Indexed
             else                                    
             begin
+                begin
+                    // Unsigned Byte
+                    if(instruction[22] == 1'b1)             
+                    begin
+                        // Add
+                        if(instruction[23] == 1'b1)
+                        begin
+                            state_number = 10'd24;
+                        end
+                        
+                        // Subtract
+                        else
+                        begin
+                            state_number = 10'd34;
+                        end
+                    end
 
+                    // Word --> TO BE IMPLEMENTED
+                    else                                    
+                    begin
+                    
+                    end   
+                end
             end
         end
 
-        // Store Register Offset
-        else if (instruction[27:25] == 3'b011)   
+        // ! Store Register Offset
+        else if (instruction[27:25] == 3'b011 && instruction[4] == 0)   
         begin
-            
+            // Offset/Pre-Indexed
+            if(instruction[24] == 1'b1)         
+            begin
+                // Offset  
+                if(instruction[21] == 1'b0)                    
+                begin
+                    // Unsigned Byte
+                    if(instruction[22] == 1'b1)             
+                    begin
+                        // Add
+                        if(instruction[23] == 1'b1)
+                        begin
+                            state_number = 10'd21;
+                        end
+                        
+                        // Subtract
+                        else
+                        begin
+                            state_number = 10'd31;
+                        end
+                    end
+
+                    // Word --> TO BE IMPLEMENTED
+                    else                                    
+                    begin
+                    
+                    end     
+                end
+
+                // Pre-Indexed
+                else                                    
+                begin
+                    // Unsigned Byte
+                    if(instruction[22] == 1'b1)             
+                    begin
+                        // Add
+                        if(instruction[23] == 1'b1)
+                        begin
+                            state_number = 10'd23;
+                        end
+                        
+                        // Subtract
+                        else
+                        begin
+                            state_number = 10'd33;
+                        end
+                    end
+
+                    // Word --> TO BE IMPLEMENTED
+                    else                                    
+                    begin
+                    
+                    end   
+                end
+            end
+
+            // Post-Indexed
+            else                                    
+            begin
+                begin
+                    // Unsigned Byte
+                    if(instruction[22] == 1'b1)             
+                    begin
+                        // Add
+                        if(instruction[23] == 1'b1)
+                        begin
+                            state_number = 10'd27;
+                        end
+                        
+                        // Subtract
+                        else
+                        begin
+                            state_number = 10'd37;
+                        end
+                    end
+
+                    // Word --> TO BE IMPLEMENTED
+                    else                                    
+                    begin
+                    
+                    end   
+                end
+            end
         end
     end
 
@@ -78,6 +192,18 @@ begin
     begin
         
     end
+
+    // *** DATA PROCESSING ***
+
+
+
+
+
+
+
+
+
+    
 end
 
 endmodule
