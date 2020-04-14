@@ -60,15 +60,15 @@ module control_register_test();
     
     initial
     begin
-        next_state = 0;
-        #10 next_state = 4;
-        #10 next_state = 20; 
+        next_state = 9'd0;
+        #10 next_state = 9'd4;
+        #10 next_state = 9'd20; 
     end
     
     initial begin
         $display("\n*** CONTROL REGISTER TEST ***");
         $display ("\n input");
-        $monitor("%b %b %b %b %b %b %b %b %b %b %b %b %b %b %b %b %b %b %b  %d", in, N, inv, select, fr_ld, rf_ld, ir_ld, mar_ld, mdr_ld, read_write, mov, data_length, ma, mb, mc, md, me, op, cr, $time);
+        $monitor("%h %b %b %b %b %b %b %b %b %b %b %b %b %b %b %b %b %b %b  %d", in, N, inv, select, fr_ld, rf_ld, ir_ld, mar_ld, mdr_ld, read_write, mov, data_length, ma, mb, mc, md, me, op, cr, $time);
     end
     
 endmodule
