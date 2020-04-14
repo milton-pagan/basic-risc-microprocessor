@@ -195,13 +195,32 @@ begin
 
     // *** DATA PROCESSING ***
 
+    // ! ADD
+    if(instruction[27:25] == 3'b001)
+    begin
+        // ADDS
+        if(instruction[20] == 1'b1)
+            state_number = 10'd10;
+
+        // ADD
+        else
+            state_number = 10'd11;
 
 
+    end // end ADD
 
+    // ! BRANCH
+    if(instruction[27:25] == 3'b101)
+    begin
+        // BLEQ -> BRANCH AND LINK
+        if(instruction[24] == 1'b1)
+            state_number = 10'd13;
+        
+        // BEQ -> BRANCH
+        else
+            state_number = 10'd12;
 
-
-
-
+    end // end BRANCH
 
     
 end
