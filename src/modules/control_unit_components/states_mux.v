@@ -1,7 +1,7 @@
-module states_mux(output reg [9:0] out, 
-    input [9:0] encoder, cr, increm,
-    input [1:0] sel
-);
+module states_mux(  output reg [9:0] out, 
+                    input [9:0] encoder, cr, increm,
+                    input [1:0] sel);
+
     always @(sel, encoder, cr, increm)
         case(sel)
         
