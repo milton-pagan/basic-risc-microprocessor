@@ -6,7 +6,7 @@
 		Dionel Mart�nez, dionel.martinez@upr.edu (Author)
 		Milton E. Pag�n, milton.pagan1@upr.edu
 */
-`include "src/modules/alu.v"
+`include "src/modules/data_path/alu.v"
 module alu_test;
 
 	// Inputs
@@ -24,7 +24,7 @@ module alu_test;
 	initial #500 $finish;			// Simulation Time
 	
 	// Starting Test
-	initial $display("\n|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--STARTING TEST--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|");
+	initial $display("\n|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--STARTING ALU TEST--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|");
 
 	// Testing operations w/o overflow
 	initial $display("\n|--------------------------------------------------------------TESTING OPERATIONS W/O OVERFLOW--------------------------------------------------------------|");
@@ -78,6 +78,6 @@ module alu_test;
 	end
 	
 	//Test Finished
-	initial #420 $display("\n|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--TEST FINISHED--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|\n");
+	initial #420 $display("\n|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--ALU TEST FINISHED--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|\n");
 
 endmodule
