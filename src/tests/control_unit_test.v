@@ -55,26 +55,38 @@ module control_unit_test();
     
     instruction_register instruction_register(ir_to_cu, instruction, IRld, clk);
     
-    initial #600 $finish;
+    initial #1186 $finish;
     
     initial begin
         clk                = 0;
-        repeat(200) #5 clk = ~clk;
+        repeat(300) #5 clk = ~clk;
     end
     
     initial fork
-    MOC                      = 1;
-    cond                     = 1;
-    reset                    = 1;
-    /* instruction           = 32'b11100101110000010010000000000001; // STRB Immediate Offset ADD */
-    #5   reset               = 0;
-    /*     #115  instruction = 32'b11100101010000010010000000000001; // Immediate Offset SUB
-     #195  instruction       = 32'b11100101111000010010000000000001; // Immediate Pre-Indexed ADD
-     #275  instruction       = 32'b11100101011000010010000000000001; // Immediate Pre-Indexed SUB */
-    instruction              = 32'b11100010000000000001000000101000; // ADD 11
-    #85  instruction         = 32'b11100010000100000001000000101000; // ADDS 10
-    #135  instruction        = 32'b00001010000000000000000000000000; // BEQ 12
-    #185  instruction        = 32'b00001011000000000000000000000000; // BLEQ 13
+          MOC         = 1;
+          cond        = 1;
+          reset       = 1;
+    #5    reset       = 0;
+    
+          instruction = 32'b11100010000000000001000000101000;   // 11 ADD
+    #85   instruction = 32'b11100010000100000001000000101000;   // 10 ADDS
+    #135  instruction = 32'b00001010000000000000000000000000;   // 12 BEQ
+    #185  instruction = 32'b00001011000000000000000000000000;   // 13 BLEQ
+    
+    #245  instruction = 32'b11100101110000010010000000000001;   // 20 STRB Immediate Offset ADD
+    #325  instruction = 32'b11100101010000010010000000000001;   // 30 STRB Immediate Offset SUB
+    #405  instruction = 32'b11100101111000010010000000000001;   // 22 STRB Immediate Pre-Indexed ADD
+    #485  instruction = 32'b11100101011000010010000000000001;   // 32 STRB Immediate Pre-Indexed SUB
+    #565  instruction = 32'b11100100110000010010000000000001;   // 24 STRB Immediate Post-Indexed ADD
+    #645  instruction = 32'b11100100010000010010000000000001;   // 34 STRB Immediate Post-Indexed SUB
+    
+    #725  instruction = 32'b11100111110000010010000000000011;   // 21 STRB Register Offset ADD
+    #805  instruction = 32'b11100111010000010010000000000011;   // 31 STRB Register Offset SUB
+    #885  instruction = 32'b11100111111000010010000000000011;   // 23 STRB Register Pre-Indexed ADD
+    #965  instruction = 32'b11100111011000010010000000000011;   // 33 STRB Register Pre-Indexed SUB
+    #1045 instruction = 32'b11100110110000010010000000000011;   // 27 STRB Register Post-Indexed ADD
+    #1125 instruction = 32'b11100110010000010010000000000011;   // 37 STRB Register Post-Indexed SUB
+
     join
     
     // Starting Test
@@ -91,6 +103,5 @@ module control_unit_test();
     end
     
     //Test Finished
-    initial #600 $display("\n|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--CU TEST FINISHED--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|\n");
-    
+    initial #1186 $display("\n|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--CU TEST FINISHED--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|\n");
 endmodule

@@ -35,9 +35,9 @@ always @(enable, read_write, address, data_in, data_length)
             begin
                 if (read_write)
                 begin
-                    data_out = 0;
-                    data_out[15:8]  = memory[address];
-                    data_out[7:0] = memory[address + 1];
+                    data_out       = 0;
+                    data_out[15:8] = memory[address];
+                    data_out[7:0]  = memory[address + 1];
                 end
                 
                 else
@@ -50,10 +50,10 @@ always @(enable, read_write, address, data_in, data_length)
             begin
                 if (read_write)
                 begin
-                    data_out[31:24]   = memory[address];
-                    data_out[23:16]  = memory[address + 1];
-                    data_out[15:8] = memory[address + 2];
-                    data_out[7:0] = memory[address + 3];
+                    data_out[31:24] = memory[address];
+                    data_out[23:16] = memory[address + 1];
+                    data_out[15:8]  = memory[address + 2];
+                    data_out[7:0]   = memory[address + 3];
                 end
                 
                 else
@@ -71,33 +71,33 @@ always @(enable, read_write, address, data_in, data_length)
                     temp = address;
                     repeat(2)
                     begin
-                    data_out[31:24]   = memory[temp];
-                    data_out[23:16]  = memory[temp + 1];
-                    data_out[15:8] = memory[temp + 2];
-                    data_out[7:0] = memory[temp + 3];
-                    temp            = temp + 4;
+                        data_out[31:24] = memory[temp];
+                        data_out[23:16] = memory[temp + 1];
+                        data_out[15:8]  = memory[temp + 2];
+                        data_out[7:0]   = memory[temp + 3];
+                        temp            = temp + 4;
+                    end
                 end
-            end
-            
-            else
-            begin
-                temp = address;
-                repeat(2)
+                
+                else
                 begin
-                    memory[temp]     = data_in[31:24];
-                    memory[temp + 1] = data_in[23:16];
-                    memory[temp + 2] = data_in[15:8];
-                    memory[temp + 3] = data_in[7:0];
-                    temp             = temp + 4;
+                    temp = address;
+                    repeat(2)
+                    begin
+                        memory[temp]     = data_in[31:24];
+                        memory[temp + 1] = data_in[23:16];
+                        memory[temp + 2] = data_in[15:8];
+                        memory[temp + 3] = data_in[7:0];
+                        temp             = temp + 4;
+                    end
                 end
             end
-        end
         endcase
-
+        
         mfc <= 1'b1;
     end
 
-    else 
-        mfc <= 1'b0;
-    
+else
+mfc <= 1'b0;
+
 endmodule

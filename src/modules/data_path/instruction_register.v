@@ -4,5 +4,5 @@ module instruction_register(output reg[31:0] out,
                             clk);
 
 always @(posedge clk)
-    if (load_enable) out = in;
+    if (load_enable) out <= in;
 endmodule

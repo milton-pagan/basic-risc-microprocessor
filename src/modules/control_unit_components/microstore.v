@@ -64,12 +64,12 @@ integer i;
 always @(next_state, reset)
 begin
     if (reset) begin
-        out           = state_info[0+:38];
-        current_state = 10'd0;
+        out           <= state_info[0+:38];
+        current_state <= 10'd0;
     end
     else begin
-        out           = state_info[38*next_state+:38];
-        current_state = next_state;
+        out           <= state_info[38*next_state+:38];
+        current_state <= next_state;
     end
 end
 
