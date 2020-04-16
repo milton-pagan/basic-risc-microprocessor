@@ -1,72 +1,76 @@
 `define NUM_STATES 50
 
-module microstore(output reg [33:0] out,
-                  input [9:0] next_state,
+module microstore(output reg[37:0] out,
+                  output reg [9:0] current_state,
+                  input[9:0] next_state,
                   input reset);
-/*
-    state_info contains control signal bits for all states. **state_info[0] corresponds to State 0, state_info[1] to State 1, etc.**
-    **MUST FILL UNUSED STATES WITH ZEROS SO ARRAY POSITIONS CORRESPOND TO THEIR STATE***/
-parameter[0:34 * `NUM_STATES - 1] state_info = {     
-    34'h18401b4c0,  // 0
-    34'h1810413c0,
-    34'h184643580,
-    34'h2c2600003,
-    34'h250000001,
-    34'h000000000,  // 5
-    34'h000000000,
-    34'h000000000,
-    34'h000000000,
-    34'h000000000,
-    34'h08c008000,  // 10
-    34'h084008000,
-    34'h08404b5c0,
-    34'h1040473cc,
-    34'h000000000,
-    34'h000000000,  // 15
-    34'h000000000,
-    34'h000000000,
-    34'h000000000,
-    34'h000000000,
-    34'h101009828,  // 20
-    34'h101001828,
-    34'h10500d828,
-    34'h105005828,
-    34'h181001bc0,
-    34'h180821bc0,  // 25
-    34'h10420d82a,
-    34'h181001bc0,
-    34'h180821bc0,
-    34'h10420582a,
-    34'h1010098a8,  // 30
-    34'h1010018a8,
-    34'h10500d8a8,
-    34'h1050058a8,
-    34'h181001bc0,
-    34'h180821bc0,  // 35
-    34'h10420d8aa,
-    34'h181001bc0,
-    34'h180821bc0,
-    34'h1042058aa,
-    34'h180821bc0, // 40
-    34'h180200800,
-    34'h3c020082a,
-    34'h000000000,
-    34'h000000000,
-    34'h000000000, // 45
-    34'h000000000,
-    34'h000000000,
-    34'h000000000,
-    34'h000000000  
+/* state_info contains control signal bits for all states. **state_info[0] corresponds to State 0, state_info[1] to State 1, etc.**
+ **MUST FILL UNUSED STATES WITH ZEROS SO ARRAY POSITIONS CORRESPOND TO THEIR STATE***/
+parameter[0:38 * `NUM_STATES - 1] state_info = {
+38'h8401b4c00, // 0
+38'h1810413c00,
+38'h1846435800,
+38'h2c26000003,
+38'h2500000001,
+38'h0000000000, // 5
+38'h0000000000,
+38'h0000000000,
+38'h0000000000,
+38'h0000000000,
+38'h08c0080000, // 10
+38'h0840080000,
+38'h08404b5c00,
+38'h1040473c0c,
+38'h0000000000,
+38'h0000000000,  // 15
+38'h0000000000,
+38'h0000000000,
+38'h0000000000,
+38'h0000000000,
+38'h1010098028, // 20
+38'h1010018028,
+38'h10500d8028,
+38'h1050058028,
+38'h181001bc00,
+38'h180821bc00, // 25
+38'h10420d802a,
+38'h181001bc00,
+38'h180821bc00,
+38'h104205802a,
+38'h1010098828, // 30
+38'h1010018828,
+38'h10500d8828,
+38'h1050058828,
+38'h181001bc00,
+38'h180821bc00, // 35
+38'h10420d882a,
+38'h181001bc00,
+38'h180821bc00,
+38'h104205882a,
+38'h180821bc00, // 40
+38'h1802008000,
+38'h3c0200802a,
+38'h0000000000,
+38'h0000000000,
+38'h0000000000, // 45
+38'h0000000000,
+38'h0000000000,
+38'h0000000000,
+38'h0000000000
 };
 
 integer i;
 
 always @(next_state, reset)
 begin
-    if(reset)
-        out = state_info[0+:34];
-    else
-        out = state_info[34*next_state+:34];
+    if (reset) begin
+        out           = state_info[0+:38];
+        current_state = 10'd0;
+    end
+    else begin
+        out           = state_info[38*next_state+:38];
+        current_state = next_state;
+    end
 end
 
 endmodule

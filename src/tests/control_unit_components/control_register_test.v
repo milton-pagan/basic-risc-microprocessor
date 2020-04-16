@@ -21,11 +21,11 @@ module control_register_test();
     mc;
     wire [2:0] N;
     wire [4:0] op;
-    wire [5:0] cr;
+    wire [9:0] cr, current_state;
     
     // Inputs
     reg clk, reset;
-    wire [33:0] in;
+    wire [37:0] in;
     reg[9:0] next_state;
     
     // Modules
@@ -49,12 +49,12 @@ module control_register_test();
     cr,
     clk,
     in);
-    microstore microstore(in, next_state, reset);
+    microstore microstore(in, current_state, next_state, reset);
     
     initial #500 $finish;
     
     initial begin
-        clk                = 1;
+        clk                = 0;
         repeat(100) #5 clk = ~clk;
     end
     
@@ -62,14 +62,14 @@ module control_register_test();
     begin
         reset = 1;
         #5 next_state = 9'd4;
-        #5 reset = 0;
+        #6 reset = 0;
         #10 next_state = 9'd20; 
     end
     
     initial begin
         $display("\n*** CONTROL REGISTER TEST ***");
         $display ("\n input");
-        $monitor("%h %b %b %b %b %b %b %b %b %b %b %b %b %b %b %b %b %b %b  %d", in, N, inv, select, fr_ld, rf_ld, ir_ld, mar_ld, mdr_ld, read_write, mov, data_length, ma, mb, mc, md, me, op, cr, $time);
+        $monitor("%d %b %b %b %b %b %b %b %b %b %b %b %b %b %b %b %b %b %b  %d", next_state, N, inv, select, fr_ld, rf_ld, ir_ld, mar_ld, mdr_ld, read_write, mov, data_length, ma, mb, mc, md, me, op, cr, $time);
     end
     
 endmodule

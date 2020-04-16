@@ -1,4 +1,4 @@
-`include "src/modules/ram.v"
+`include "src/modules/data_path/ram.v"
 module ram_test();
     
     // Outputs

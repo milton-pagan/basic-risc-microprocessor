@@ -1,4 +1,4 @@
-module next_state_address_selector(output reg[1:0] mux_select,
+    module next_state_address_selector(output reg[1:0] mux_select,
                                    input[2:0] N,
                                    input sts);
 

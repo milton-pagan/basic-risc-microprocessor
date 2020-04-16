@@ -6,7 +6,7 @@
 		Dionel Mart�nez, dionel.martinez@upr.edu (Author)
 		Milton E. Pag�n, milton.pagan1@upr.edu
 */
-`include "src/modules/alu.v"
+`include "src/modules/data_path/alu.v"
 module alu_test;
 
 	// Inputs

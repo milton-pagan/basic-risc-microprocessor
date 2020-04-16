@@ -6,12 +6,11 @@ begin
     /*
         *** LOAD/STORE INSTRUCTIONS ***
     */
-
-    // *** STORE ***
-    if (instruction[20] == 0)
+    // ! Immediate Offset
+    if (instruction[27:25] == 3'b010)      
     begin
-        // ! Store Immediate Offset
-        if (instruction[27:25] == 3'b010)      
+        // * STORE
+        if(instruction[20] == 1'b0) 
         begin
             // Offset/Pre-Indexed
             if(instruction[24] == 1'b1)         
@@ -98,8 +97,17 @@ begin
             end
         end
 
-        // ! Store Register Offset
-        else if (instruction[27:25] == 3'b011 && instruction[4] == 0)   
+        // * LOAD
+        else begin
+           
+        end
+    end
+
+    // ! Store Register Offset
+    else if (instruction[27:25] == 3'b011 && instruction[4] == 0)   
+    begin
+        // * STORE
+        if(instruction[20] == 1'b0) 
         begin
             // Offset/Pre-Indexed
             if(instruction[24] == 1'b1)         
@@ -184,19 +192,18 @@ begin
                     end   
                 end
             end
-        end
-    end
-
-    // *** LOAD ***
-    else
-    begin
+        end 
         
+        // * LOAD
+        else begin
+           
+        end   
     end
 
     // *** DATA PROCESSING ***
 
     // ! ADD
-    if(instruction[27:25] == 3'b001)
+    else if(instruction[27:25] == 3'b001 || instruction[27:25] == 3'b000)
     begin
         // ADDS
         if(instruction[20] == 1'b1)
@@ -210,7 +217,7 @@ begin
     end // end ADD
 
     // ! BRANCH
-    if(instruction[27:25] == 3'b101)
+    else if(instruction[27:25] == 3'b101)
     begin
         // BLEQ -> BRANCH AND LINK
         if(instruction[24] == 1'b1)
@@ -224,5 +231,4 @@ begin
 
     
 end
-
 endmodule

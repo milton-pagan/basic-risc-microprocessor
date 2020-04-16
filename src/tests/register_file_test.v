@@ -1,4 +1,4 @@
-`include "src/modules/register_file.v"
+`include "src/modules/data_path/register_file.v"
 module register_file_test();
     // Outputs
     
