@@ -1,5 +1,5 @@
 `include "src/modules/data_path/control_unit.v"
-`include "src/modules/data_path/instruction_register.v"
+`include "src/modules/data_path/register_32_bit.v"
 
 module control_unit_test();
     
@@ -53,7 +53,7 @@ module control_unit_test();
     reset,
     ir_to_cu);
     
-    instruction_register instruction_register(ir_to_cu, instruction, IRld, clk);
+    register_32_bit instruction_register(ir_to_cu, instruction, IRld, clk);
     
     initial #1186 $finish;
     
