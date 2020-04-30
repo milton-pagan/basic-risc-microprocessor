@@ -8,9 +8,10 @@ reg[31:0] temp;
 
 always @(instruction, Rm) begin
     case(instruction[27:25])
-        3'b001: begin
-            // Shift by Immediate Shifter Operand
-            if (instruction[4] == 0) begin
+        
+        // Shift by Immediate Shifter Operand
+        3'b000: begin
+            if (instruction[4] == 0)
                 case(instruction[6:5])
                     // LSL
                     2'b00: begin
@@ -32,7 +33,7 @@ always @(instruction, Rm) begin
                     2'b10: begin
                         temp      = Rm;
                         carry_out = temp[instruction[11:7] - 1];
-                        temp      = temp >>> instruction[11:7];
+                        temp      = $signed(temp) >>> instruction[11:7];
                         out       = temp;
                     end
                     
@@ -40,38 +41,37 @@ always @(instruction, Rm) begin
                     2'b11: begin
                         temp      = Rm;
                         carry_out = temp[instruction[11:7] - 1];
-                        out       = (temp >> instruction[11:7]) | (temp << ~instruction[11:7]);
+                        out       = (temp >> instruction[11:7]) | (temp << 32 - instruction[11:7]);
                     end
                     
                 endcase
-            end
+                end
             
             // 32 Bit Immediate Shifter Operand
-            else begin
+            3'b001: begin
                 temp      = {24'd0,instruction[7:0]};
                 carry_out = temp[instruction[11:8] * 2 - 1];
-                out       = (temp >> instruction[11:8]) | (temp << ~instruction[11:8]);
+                out       = (temp >> instruction[11:8] * 2) | (temp << 32 - instruction[11:8] * 2);
             end
-        end
-        
-        // Immediate Offset
-        3'b010: begin
-            out = {20'd0, instruction[11:0]};
-        end
-        
-        
-        // Register Offset/Index
-        3'b011: begin
-            if (instruction[4] == 0) begin
-                out = Rm;
+            
+            // Immediate Offset
+            3'b010: begin
+                out = {20'd0, instruction[11:0]};
             end
-        end
-        
-        // Branch and Branch with Link
-        3'b101: begin
-            out = {{8{instruction[23]}}, instruction[23:0]};
-        end
-        
+            
+            
+            // Register Offset/Index
+            3'b011: begin
+                if (instruction[4] == 0) begin
+                    out = Rm;
+                end
+            end
+            
+            // Branch and Branch with Link
+            3'b101: begin
+                out = {{8{instruction[23]}}, instruction[23:0]};
+            end
+            
     endcase
 end
 

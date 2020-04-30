@@ -1,5 +1,5 @@
 module ram(output reg[31:0] data_out,
-           output reg mfc,
+           output reg moc,
            input enable,
            read_write,
            input [1:0] data_length,
@@ -16,7 +16,7 @@ reg [7:0] memory[0:511];
 always @(enable, read_write, address, data_in, data_length)
     if (enable)
     begin
-        mfc <= 1'b0;
+        moc <= 1'b0;
         case(data_length)
             BYTE:
             begin
@@ -94,10 +94,10 @@ always @(enable, read_write, address, data_in, data_length)
             end
         endcase
         
-        mfc <= 1'b1;
+        moc <= 1'b1;
     end
 
 else
-mfc <= 1'b0;
+moc <= 1'b0;
 
 endmodule

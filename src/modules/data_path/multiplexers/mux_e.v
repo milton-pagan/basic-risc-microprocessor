@@ -1,4 +1,4 @@
-module multiplexer_16_to_1(output reg [31:0] mult_output,
+module mux_e(output reg [31:0] mult_output,
                            input [31:0] data0,
                            data1,
                            input mult_select);
