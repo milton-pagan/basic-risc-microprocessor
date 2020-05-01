@@ -13,7 +13,7 @@
 `include "src/modules/data_path/multiplexers/mux_d.v"
 `include "src/modules/data_path/multiplexers/mux_e.v"
 
-module data_path(output[9:0] current_state);
+module data_path(output[9:0] current_state, input main_clk, reset);
     
     // Wires
     wire[31:0] PA, PB, alu_out, B, E;
@@ -39,10 +39,9 @@ module data_path(output[9:0] current_state);
     DL;
     wire[4:0] OP;
     wire MOC,
-    cond,
-    reset;
+    cond;
     
-    reg main_clk;
+
     
     // Modules
     
