@@ -37,7 +37,18 @@ begin
                     // Word --> TO BE IMPLEMENTED
                     else                                    
                     begin
-                    
+                        // Add
+                        if(instruction[23] == 1'b1)
+                        begin
+                            state_number = 10'd43;
+                        end
+                        
+                        // Subtract
+                        else
+                        begin
+                            state_number = 10'd53;
+                        end
+ 
                     end     
                 end
 
@@ -63,7 +74,19 @@ begin
                     // Word --> TO BE IMPLEMENTED
                     else                                    
                     begin
-                    
+                        // Add
+                        if(instruction[23] == 1'b1)
+                        begin
+                            state_number = 10'd45;
+                        end
+                        
+                        // Subtract
+                        else
+                        begin
+                            state_number = 10'd55;
+                        end
+ 
+
                     end   
                 end
             end
@@ -91,7 +114,19 @@ begin
                     // Word --> TO BE IMPLEMENTED
                     else                                    
                     begin
-                    
+                        // Add
+                        if(instruction[23] == 1'b1)
+                        begin
+                            state_number = 10'd47;
+                        end
+                        
+                        // Subtract
+                        else
+                        begin
+                            state_number = 10'd57;
+                        end
+ 
+
                     end   
                 end
             end
@@ -134,7 +169,19 @@ begin
                     // Word --> TO BE IMPLEMENTED
                     else                                    
                     begin
-                    
+                        // Add
+                        if(instruction[23] == 1'b1)
+                        begin
+                            state_number = 10'd44;
+                        end
+                        
+                        // Subtract
+                        else
+                        begin
+                            state_number = 10'd54;
+                        end
+ 
+
                     end     
                 end
 
@@ -160,7 +207,17 @@ begin
                     // Word --> TO BE IMPLEMENTED
                     else                                    
                     begin
-                    
+                        // Add
+                        if(instruction[23] == 1'b1)
+                        begin
+                            state_number = 10'd46;
+                        end
+                        
+                        // Subtract
+                        else
+                        begin
+                            state_number = 10'd56;
+                        end
                     end   
                 end
             end
@@ -188,7 +245,17 @@ begin
                     // Word --> TO BE IMPLEMENTED
                     else                                    
                     begin
-                    
+                        // Add
+                        if(instruction[23] == 1'b1)
+                        begin
+                            state_number = 10'd50;
+                        end
+                        
+                        // Subtract
+                        else
+                        begin
+                            state_number = 10'd60;
+                        end
                     end   
                 end
             end
@@ -229,6 +296,7 @@ begin
 
     end // end BRANCH
 
-    
+    // If instruction unknown go back to fetch
+    else state_number = 10'd1; 
 end
 endmodule

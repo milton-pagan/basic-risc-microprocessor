@@ -18,7 +18,7 @@ module data_path(output[9:0] current_state, input main_clk, reset);
     // Wires
     wire[31:0] PA, PB, alu_out, B, E;
     wire Z, N, V, C, carry_out;
-    wire[3:0] A, Cp;
+    wire[3:0] A, Cp, flags;
     wire[4:0] op_to_alu;
     
     wire[31:0] ir, ram_out, mdr_out, address, shift_out;
@@ -48,6 +48,10 @@ module data_path(output[9:0] current_state, input main_clk, reset);
     control_unit control_unit(FRld, RFld, IRld, MARld, MDRld, RW, MOV, Cin, MD, ME, MA, MB, MC, DL, OP, current_state, MOC, main_clk, cond, reset, ir);
     
     ALU alu(PA, B, Cin, op_to_alu, alu_out, C, N, V, Z);
+
+    condition_tester condition_tester(cond, flags, ir[31:28]);
+
+    flags_register flags_register(flags, Z, N, C, V, FRld, main_clk);
     
     register_file register_file(PA, PB, A, ir[3:0], alu_out, Cp, RFld, main_clk);
     
