@@ -33,11 +33,15 @@ module data_path_test();
 
     initial begin
         reset <= 1;
+        data_path.ram.memory[50] = 0;
+        data_path.ram.memory[51] = 0;
+        data_path.ram.memory[52] = 0;
+        data_path.ram.memory[53] = 8'd5;
         #6 reset = 0;
     end
     
    initial begin
-       $monitor("%d %b %d", current_state, data_path.register_file.reg_to_mult[15], $time);
+       $monitor("%d %b %d %d %d", current_state, data_path.register_file.reg_to_mult[15], data_path.register_file.reg_to_mult[5], data_path.alu_out, $time);
    end 
     
 endmodule

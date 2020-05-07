@@ -4,145 +4,169 @@ module encoder(output reg [9:0] state_number,
 always @(instruction)
 begin
     /*
-        *** LOAD/STORE INSTRUCTIONS ***
+    *    *** LOAD/STORE INSTRUCTIONS ***
     */
     // ! Immediate Offset
     if (instruction[27:25] == 3'b010)      
     begin
-        // * STORE
-        if(instruction[20] == 1'b0) 
+        // Offset/Pre-Indexed
+        if(instruction[24] == 1'b1)         
         begin
-            // Offset/Pre-Indexed
-            if(instruction[24] == 1'b1)         
+            // Offset  
+            if(instruction[21] == 1'b0)                    
             begin
-                // Offset  
-                if(instruction[21] == 1'b0)                    
+                // Unsigned Byte
+                if(instruction[22] == 1'b1)             
                 begin
-                    // Unsigned Byte
-                    if(instruction[22] == 1'b1)             
+                    // Add
+                    if(instruction[23] == 1'b1)
                     begin
-                        // Add
-                        if(instruction[23] == 1'b1)
-                        begin
-                            state_number = 10'd20;
-                        end
-                        
-                        // Subtract
-                        else
-                        begin
-                            state_number = 10'd30;
-                        end
+                    if(instruction[20] == 1'b0) 
+                        state_number = 10'd20; // Store
+                    else
+                        state_number = 10'd66; // Load
                     end
-
-                    // Word --> TO BE IMPLEMENTED
-                    else                                    
+                    
+                    // Subtract
+                    else
                     begin
-                        // Add
-                        if(instruction[23] == 1'b1)
-                        begin
-                            state_number = 10'd43;
-                        end
-                        
-                        // Subtract
-                        else
-                        begin
-                            state_number = 10'd53;
-                        end
- 
-                    end     
+                    if(instruction[20] == 1'b0) 
+                        state_number = 10'd30; // Store 
+                    else
+                        state_number = 10'd74; // Load
+                    end
                 end
 
-                // Pre-Indexed
+                // Word 
                 else                                    
                 begin
-                    // Unsigned Byte
-                    if(instruction[22] == 1'b1)             
+                    // Add
+                    if(instruction[23] == 1'b1)
                     begin
-                        // Add
-                        if(instruction[23] == 1'b1)
-                        begin
-                            state_number = 10'd22;
-                        end
-                        
-                        // Subtract
-                        else
-                        begin
-                            state_number = 10'd32;
-                        end
+                    if(instruction[20] == 1'b0) 
+                        state_number = 10'd43; // Store
+                    else
+                        state_number = 10'd85; // Load
+                    end
+                    
+                    // Subtract
+                    else
+                    begin
+                    if(instruction[20] == 1'b0) 
+                        state_number = 10'd53; // Store
+                    else
+                        state_number = 10'd93; // Load
                     end
 
-                    // Word --> TO BE IMPLEMENTED
-                    else                                    
-                    begin
-                        // Add
-                        if(instruction[23] == 1'b1)
-                        begin
-                            state_number = 10'd45;
-                        end
-                        
-                        // Subtract
-                        else
-                        begin
-                            state_number = 10'd55;
-                        end
- 
-
-                    end   
-                end
+                end     
             end
 
-            // Post-Indexed
+            // Pre-Indexed
             else                                    
             begin
+                // Unsigned Byte
+                if(instruction[22] == 1'b1)             
                 begin
-                    // Unsigned Byte
-                    if(instruction[22] == 1'b1)             
+                    // Add
+                    if(instruction[23] == 1'b1)
                     begin
-                        // Add
-                        if(instruction[23] == 1'b1)
-                        begin
-                            state_number = 10'd24;
-                        end
-                        
-                        // Subtract
-                        else
-                        begin
-                            state_number = 10'd34;
-                        end
+                    if(instruction[20] == 1'b0) 
+                        state_number = 10'd22; // Store
+                    else
+                        state_number = 10'd68; // Load
+                    end
+                    
+                    // Subtract
+                    else
+                    begin
+                    if(instruction[20] == 1'b0) 
+                        state_number = 10'd32; // Store
+                    else 
+                    state_number = 10'd76; // Load
+                    end
+                end
+
+                // Word 
+                else                                    
+                begin
+                    // Add
+                    if(instruction[23] == 1'b1)
+                    begin
+                    if(instruction[20] == 1'b0) 
+                        state_number = 10'd45; // Store
+                    else
+                        state_number = 10'd87; // Load
+                    end
+                    
+                    // Subtract
+                    else
+                    begin
+                    if(instruction[20] == 1'b0) 
+                        state_number = 10'd55; // Store
+                    else 
+                        state_number = 10'd95; // Load
                     end
 
-                    // Word --> TO BE IMPLEMENTED
-                    else                                    
-                    begin
-                        // Add
-                        if(instruction[23] == 1'b1)
-                        begin
-                            state_number = 10'd47;
-                        end
-                        
-                        // Subtract
-                        else
-                        begin
-                            state_number = 10'd57;
-                        end
- 
 
-                    end   
-                end
+                end   
             end
         end
 
-        // * LOAD
-        else begin
-           
+        // Post-Indexed
+        else                                    
+        begin
+            begin
+                // Unsigned Byte
+                if(instruction[22] == 1'b1)             
+                begin
+                    // Add
+                    if(instruction[23] == 1'b1)
+                    begin
+                    if(instruction[20] == 1'b0) 
+                        state_number = 10'd24; // Store
+                    else
+                        state_number = 10'd70; // Load
+                    end
+                    
+                    // Subtract
+                    else
+                    begin
+                    if(instruction[20] == 1'b0) 
+                        state_number = 10'd34; // Store
+                    else
+                        state_number = 10'd78; // Load
+                    end
+                end
+
+                // Word 
+                else                                    
+                begin
+                    // Add
+                    if(instruction[23] == 1'b1)
+                    begin
+                    if(instruction[20] == 1'b0) 
+                        state_number = 10'd47; // Store
+                    else
+                        state_number =10'd89; // Load
+                    end
+                    
+                    // Subtract
+                    else
+                    begin
+                    if(instruction[20] == 1'b0) 
+                        state_number = 10'd57; // Store
+                    else
+                        state_number = 10'd97; // Load
+                    end
+                end   
+            end
         end
     end
 
-    // ! Store Register Offset
+        
+    // ! Register Offset
     else if (instruction[27:25] == 3'b011 && instruction[4] == 0)   
     begin
-        // * STORE
-        if(instruction[20] == 1'b0) 
         begin
             // Offset/Pre-Indexed
             if(instruction[24] == 1'b1)         
@@ -156,29 +180,41 @@ begin
                         // Add
                         if(instruction[23] == 1'b1)
                         begin
-                            state_number = 10'd21;
+                        if(instruction[20] == 1'b0) 
+                            state_number = 10'd21; // Store
+                        else
+                            state_number = 10'd67; // Load
                         end
                         
                         // Subtract
                         else
                         begin
-                            state_number = 10'd31;
+                        if(instruction[20] == 1'b0) 
+                            state_number = 10'd31; // Store
+                        else
+                            state_number = 10'd75; // Load
                         end
                     end
 
-                    // Word --> TO BE IMPLEMENTED
+                    // Word 
                     else                                    
                     begin
                         // Add
                         if(instruction[23] == 1'b1)
                         begin
-                            state_number = 10'd44;
+                        if(instruction[20] == 1'b0) 
+                            state_number = 10'd44; // Store
+                        else
+                            state_number = 10'd86; // Load
                         end
                         
                         // Subtract
                         else
                         begin
-                            state_number = 10'd54;
+                        if(instruction[20] == 1'b0) 
+                            state_number = 10'd54; // Store
+                        else
+                            state_number = 10'd94; // Load
                         end
  
 
@@ -194,29 +230,41 @@ begin
                         // Add
                         if(instruction[23] == 1'b1)
                         begin
-                            state_number = 10'd23;
+                        if(instruction[20] == 1'b0) 
+                            state_number = 10'd23; // Store
+                        else
+                            state_number = 10'd69; // Load
                         end
                         
                         // Subtract
                         else
                         begin
-                            state_number = 10'd33;
+                        if(instruction[20] == 1'b0) 
+                            state_number = 10'd33; // Store
+                        else
+                            state_number = 10'd76; // Load
                         end
                     end
 
-                    // Word --> TO BE IMPLEMENTED
+                    // Word 
                     else                                    
                     begin
                         // Add
                         if(instruction[23] == 1'b1)
                         begin
-                            state_number = 10'd46;
+                        if(instruction[20] == 1'b0) 
+                            state_number = 10'd46; // Store
+                        else
+                            state_number = 10'd88; // Load
                         end
                         
                         // Subtract
                         else
                         begin
-                            state_number = 10'd56;
+                        if(instruction[20] == 1'b0) 
+                            state_number = 10'd56; // Store
+                        else
+                            state_number = 10'd96; // Load
                         end
                     end   
                 end
@@ -232,39 +280,82 @@ begin
                         // Add
                         if(instruction[23] == 1'b1)
                         begin
-                            state_number = 10'd27;
+                        if(instruction[20] == 1'b0) 
+                            state_number = 10'd27; // Store
+                        else
+                            state_number = 10'd72; // Load
                         end
                         
                         // Subtract
                         else
                         begin
-                            state_number = 10'd37;
+                        if(instruction[20] == 1'b0) 
+                            state_number = 10'd37; // Store
+                        else
+                            state_number = 10'd80; // Load
                         end
                     end
 
-                    // Word --> TO BE IMPLEMENTED
+                    // Word 
                     else                                    
                     begin
                         // Add
                         if(instruction[23] == 1'b1)
                         begin
-                            state_number = 10'd50;
+                        if(instruction[20] == 1'b0) 
+                            state_number = 10'd50; // Store
+                        else
+                            state_number = 10'd91; // Load
                         end
                         
                         // Subtract
                         else
                         begin
-                            state_number = 10'd60;
+                        if(instruction[20] == 1'b0) 
+                            state_number = 10'd60; // Store
+                        else
+                            state_number = 10'd99; // Load
                         end
                     end   
                 end
             end
         end 
-        
-        // * LOAD
+    end
+
+    /*
+    *   Miscellaneous Load/Store   
+    */
+
+    if(instruction[27:25] == 3'b000 && instruction[7] == 1 && instruction[4] == 1) begin
+        // Immediate Offset/Index
+        if(instruction[22] == 1) begin
+            // Offset/Pre-Indexed
+            if(instruction[24] == 1'b1)         
+            begin
+                // Offset  
+                if(instruction[21] == 1'b0)                    
+                begin
+                       
+                end
+
+                // Pre-Indexed
+                else begin
+
+                end
+            end
+
+            // Post-Indexed
+            else                                    
+            begin
+
+            end
+
+        end 
+
+        // Register Offset/Index
         else begin
-           
-        end   
+            
+        end
     end
 
     // *** DATA PROCESSING ***

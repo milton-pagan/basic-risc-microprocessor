@@ -45,34 +45,29 @@ always @(instruction, Rm) begin
                     end
                     
                 endcase
-                end
-            
-            // 32 Bit Immediate Shifter Operand
-            3'b001: begin
-                temp      = {24'd0,instruction[7:0]};
-                carry_out = temp[instruction[11:8] * 2 - 1];
-                out       = (temp >> instruction[11:8] * 2) | (temp << 32 - instruction[11:8] * 2);
+            else if (instruction[4] == 1 && instruction[7] == 1 && instruction[22] == 1) begin
+               out = {24'd0, instruction[11:8], instruction[3:0]}; 
             end
-            
-            // Immediate Offset
-            3'b010: begin
-                out = {20'd0, instruction[11:0]};
-            end
-            
-            
-            // Register Offset/Index
-            3'b011: begin
-                if (instruction[4] == 0) begin
-                    out = Rm;
-                end
-            end
-            
-            // Branch and Branch with Link
-            3'b101: begin
-                out = {{8{instruction[23]}}, instruction[23:0]};
-            end
-            
-    endcase
+        end
+        
+        // 32 Bit Immediate Shifter Operand
+        3'b001: begin
+            temp      = {24'd0,instruction[7:0]};
+            carry_out = temp[instruction[11:8] * 2 - 1];
+            out       = (temp >> instruction[11:8] * 2) | (temp << 32 - instruction[11:8] * 2);
+        end
+        
+        // Immediate Offset
+        3'b010: begin
+            out = {20'd0, instruction[11:0]};
+        end
+        
+        // Branch and Branch with Link
+        3'b101: begin
+            out = {{8{instruction[23]}}, instruction[23:0]};
+        end
+        
+endcase
 end
 
 endmodule
