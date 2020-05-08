@@ -2,6 +2,7 @@ module ram(output reg[31:0] data_out,
            output reg moc,
            input enable,
            read_write,
+           sig,
            input [1:0] data_length,
            input[8:0] address,
            input[31:0] data_in);

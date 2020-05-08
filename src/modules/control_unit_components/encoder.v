@@ -326,7 +326,7 @@ begin
     *   Miscellaneous Load/Store   
     */
 
-    if(instruction[27:25] == 3'b000 && instruction[7] == 1 && instruction[4] == 1) begin
+    else if(instruction[27:25] == 3'b000 && instruction[7] == 1 && instruction[4] == 1) begin
         // Immediate Offset/Index
         if(instruction[22] == 1) begin
             // Offset/Pre-Indexed
@@ -502,47 +502,30 @@ begin
         end
     end
 
-      // *** DATA PROCESSING ***
+    // ! *** DATA PROCESSING ***
 
-            else if (instruction[27:25] == 3'b001 || instruction[27:25] == 3'b000)
-                begin
-                    // Without shift OPs
-                    if (instruction[24:21] != 4'd14)
-                        begin
-                            // With S
-                            if (instruction[20] == 1'b1)
-                                state_number = 10'd10;
-                            // W/o S
-                            else
-                                state_number = 10'd11;
-                        end
+    else if(instruction[27:25] == 3'b001 || instruction[27:25] == 3'b000)
+    begin
+        // With S
+        if(instruction[20] == 1'b1)
+            state_number = 10'd10;
 
-                        // With shift OPs
-                    else
-                        begin
-                            // With S
-                            if (instruction[20] == 1'b1)
-                                state_number = 10'd14;
+        // Without S
+        else
+            state_number = 10'd11;
+    end
+    // ! BRANCH
+    else if (instruction[27:25] == 3'b101)
+        begin
+            // BLEQ -> BRANCH AND LINK
+            if (instruction[24] == 1'b1)
+                state_number = 10'd13;
 
-                            // W/o S
-                            else
-                                state_number = 10'd15;
-                        end
+                // BEQ -> BRANCH
+            else
+                state_number = 10'd12;
 
-                end
-
-                // ! BRANCH
-            else if (instruction[27:25] == 3'b101)
-                begin
-                    // BLEQ -> BRANCH AND LINK
-                    if (instruction[24] == 1'b1)
-                        state_number = 10'd13;
-
-                        // BEQ -> BRANCH
-                    else
-                        state_number = 10'd12;
-
-                end
+        end
 
     // If instruction unknown go back to fetch
     else state_number = 10'd1; 

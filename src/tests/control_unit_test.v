@@ -11,6 +11,7 @@ module control_unit_test();
     MDRld,
     RW,
     MOV,
+    SIG,
     Cin,
     MD,
     ME;
@@ -38,6 +39,7 @@ module control_unit_test();
     MDRld,
     RW,
     MOV,
+    SIG,
     Cin,
     MD,
     ME,

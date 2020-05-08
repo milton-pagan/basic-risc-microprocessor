@@ -30,6 +30,7 @@ module data_path(output[9:0] current_state, input main_clk, reset);
     MDRld,
     RW,
     MOV,
+    SIG,
     Cin,
     MD,
     ME;
@@ -45,7 +46,7 @@ module data_path(output[9:0] current_state, input main_clk, reset);
     
     // Modules
     
-    control_unit control_unit(FRld, RFld, IRld, MARld, MDRld, RW, MOV, Cin, MD, ME, MA, MB, MC, DL, OP, current_state, MOC, main_clk, cond, reset, ir);
+    control_unit control_unit(FRld, RFld, IRld, MARld, MDRld, RW, MOV, SIG, Cin, MD, ME, MA, MB, MC, DL, OP, current_state, MOC, main_clk, cond, reset, ir);
     
     ALU alu(PA, B, Cin, op_to_alu, alu_out, C, N, V, Z);
 
@@ -55,7 +56,7 @@ module data_path(output[9:0] current_state, input main_clk, reset);
     
     register_file register_file(PA, PB, A, ir[3:0], alu_out, Cp, RFld, main_clk);
     
-    ram ram(ram_out, MOC, MOV, RW, DL, address[8:0], mdr_out);
+    ram ram(ram_out, MOC, MOV, RW, SIG, DL, address[8:0], mdr_out);
     
     shift_sign_extender shift_sign_extender(shift_out, carry_out, ir, PB);
     

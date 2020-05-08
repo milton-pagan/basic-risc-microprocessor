@@ -15,6 +15,7 @@ module control_unit(output FRld,
                     MDRld,
                     RW,
                     MOV,
+                    SIG,
                     Cin,
                     MD,
                     ME,
@@ -36,7 +37,7 @@ module control_unit(output FRld,
     wire[2:0] cr_to_nas;
     wire[1:0] cr_to_condition_mux;
     
-    wire[37:0] microstore_to_cr;
+    wire[38:0] microstore_to_cr;
     
     wire cond_mux_to_inv, inv_to_nas;
     
@@ -47,7 +48,7 @@ module control_unit(output FRld,
     
     
     // Modules
-    control_register control_register(FRld, RFld, IRld, MARld, MDRld, MD, ME, RW, MOV, cr_to_inv, DL, cr_to_condition_mux, MA, MB, MC, cr_to_nas, OP, cr_to_states_mux, current_state, clk, microstore_to_cr, microstore_to_cr_cs);
+    control_register control_register(FRld, RFld, IRld, MARld, MDRld, MD, ME, RW, MOV, SIG, cr_to_inv, DL, cr_to_condition_mux, MA, MB, MC, cr_to_nas, OP, cr_to_states_mux, current_state, clk, microstore_to_cr, microstore_to_cr_cs);
     inverter inverter(inv_to_nas, cond_mux_to_inv, cr_to_inv);
     conditions_mux conditions_mux(cond_mux_to_inv, MOC, cond, cr_to_condition_mux);
     next_state_address_selector next_state_address_selector(nas_to_states_mux, cr_to_nas, inv_to_nas);
