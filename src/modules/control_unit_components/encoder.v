@@ -502,34 +502,47 @@ begin
         end
     end
 
-    // *** DATA PROCESSING ***
+      // *** DATA PROCESSING ***
 
-    // ! ADD
-    else if(instruction[27:25] == 3'b001 || instruction[27:25] == 3'b000)
-    begin
-        // ADDS
-        if(instruction[20] == 1'b1)
-            state_number = 10'd10;
+            else if (instruction[27:25] == 3'b001 || instruction[27:25] == 3'b000)
+                begin
+                    // Without shift OPs
+                    if (instruction[24:21] != 4'd14)
+                        begin
+                            // With S
+                            if (instruction[20] == 1'b1)
+                                state_number = 10'd10;
+                            // W/o S
+                            else
+                                state_number = 10'd11;
+                        end
 
-        // ADD
-        else
-            state_number = 10'd11;
+                        // With shift OPs
+                    else
+                        begin
+                            // With S
+                            if (instruction[20] == 1'b1)
+                                state_number = 10'd14;
 
+                            // W/o S
+                            else
+                                state_number = 10'd15;
+                        end
 
-    end // end ADD
+                end
 
-    // ! BRANCH
-    else if(instruction[27:25] == 3'b101)
-    begin
-        // BLEQ -> BRANCH AND LINK
-        if(instruction[24] == 1'b1)
-            state_number = 10'd13;
-        
-        // BEQ -> BRANCH
-        else
-            state_number = 10'd12;
+                // ! BRANCH
+            else if (instruction[27:25] == 3'b101)
+                begin
+                    // BLEQ -> BRANCH AND LINK
+                    if (instruction[24] == 1'b1)
+                        state_number = 10'd13;
 
-    end // end BRANCH
+                        // BEQ -> BRANCH
+                    else
+                        state_number = 10'd12;
+
+                end
 
     // If instruction unknown go back to fetch
     else state_number = 10'd1; 
