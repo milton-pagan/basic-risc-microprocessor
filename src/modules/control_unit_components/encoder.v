@@ -330,31 +330,175 @@ begin
         // Immediate Offset/Index
         if(instruction[22] == 1) begin
             // Offset/Pre-Indexed
-            if(instruction[24] == 1'b1)         
-            begin
+            if(instruction[24] == 1'b1) begin
                 // Offset  
-                if(instruction[21] == 1'b0)                    
-                begin
-                       
+                if(instruction[21] == 1'b0) begin
+                    // Add
+                    if(instruction[23] == 1) begin
+                        case({instruction[20], instruction[6], instruction[5]})                        
+                            3'b001: state_number = 0;   // STRH
+                            3'b010: state_number = 0;   // LDRD
+                            3'b011: state_number = 0;   // STRD
+                            3'b101: state_number = 0;   // LDRH
+                            3'b110: state_number = 0;   // LDRSB
+                            3'b111: state_number = 0;   // LDRSH
+                        endcase
+                    end 
+
+                    // Subtract
+                    else begin
+                        case({instruction[20], instruction[6], instruction[5]})                        
+                            3'b001: state_number = 0;   // STRH
+                            3'b010: state_number = 0;   // LDRD
+                            3'b011: state_number = 0;   // STRD
+                            3'b101: state_number = 0;   // LDRH
+                            3'b110: state_number = 0;   // LDRSB
+                            3'b111: state_number = 0;   // LDRSH
+                        endcase
+                    end
                 end
 
                 // Pre-Indexed
                 else begin
+                    // Add
+                    if(instruction[23] == 1) begin
+                        case({instruction[20], instruction[6], instruction[5]})                        
+                            3'b001: state_number = 0;   // STRH
+                            3'b010: state_number = 0;   // LDRD
+                            3'b011: state_number = 0;   // STRD
+                            3'b101: state_number = 0;   // LDRH
+                            3'b110: state_number = 0;   // LDRSB
+                            3'b111: state_number = 0;   // LDRSH
+                        endcase
+                    end 
 
+                    // Subtract
+                    else begin
+                        case({instruction[20], instruction[6], instruction[5]})                        
+                            3'b001: state_number = 0;   // STRH
+                            3'b010: state_number = 0;   // LDRD
+                            3'b011: state_number = 0;   // STRD
+                            3'b101: state_number = 0;   // LDRH
+                            3'b110: state_number = 0;   // LDRSB
+                            3'b111: state_number = 0;   // LDRSH
+                        endcase
+                    end
                 end
             end
 
             // Post-Indexed
-            else                                    
-            begin
+            else begin
+                    // Add
+                    if(instruction[23] == 1) begin
+                        case({instruction[20], instruction[6], instruction[5]})                        
+                            3'b001: state_number = 0;   // STRH
+                            3'b010: state_number = 0;   // LDRD
+                            3'b011: state_number = 0;   // STRD
+                            3'b101: state_number = 0;   // LDRH
+                            3'b110: state_number = 0;   // LDRSB
+                            3'b111: state_number = 0;   // LDRSH
+                        endcase
+                    end 
 
+                    // Subtract
+                    else begin
+                        case({instruction[20], instruction[6], instruction[5]})                        
+                            3'b001: state_number = 0;   // STRH
+                            3'b010: state_number = 0;   // LDRD
+                            3'b011: state_number = 0;   // STRD
+                            3'b101: state_number = 0;   // LDRH
+                            3'b110: state_number = 0;   // LDRSB
+                            3'b111: state_number = 0;   // LDRSH
+                        endcase
+                    end
             end
-
         end 
 
         // Register Offset/Index
         else begin
-            
+            // Offset/Pre-Indexed
+            if(instruction[24] == 1'b1) begin
+                // Offset  
+                if(instruction[21] == 1'b0) begin
+                    // Add
+                    if(instruction[23] == 1) begin
+                        case({instruction[20], instruction[6], instruction[5]})                        
+                            3'b001: state_number = 0;   // STRH
+                            3'b010: state_number = 0;   // LDRD
+                            3'b011: state_number = 0;   // STRD
+                            3'b101: state_number = 0;   // LDRH
+                            3'b110: state_number = 0;   // LDRSB
+                            3'b111: state_number = 0;   // LDRSH
+                        endcase
+                    end 
+
+                    // Subtract
+                    else begin
+                        case({instruction[20], instruction[6], instruction[5]})                        
+                            3'b001: state_number = 0;   // STRH
+                            3'b010: state_number = 0;   // LDRD
+                            3'b011: state_number = 0;   // STRD
+                            3'b101: state_number = 0;   // LDRH
+                            3'b110: state_number = 0;   // LDRSB
+                            3'b111: state_number = 0;   // LDRSH
+                        endcase
+                    end
+                end
+
+                // Pre-Indexed
+                else begin
+                    // Add
+                    if(instruction[23] == 1) begin
+                        case({instruction[20], instruction[6], instruction[5]})                        
+                            3'b001: state_number = 0;   // STRH
+                            3'b010: state_number = 0;   // LDRD
+                            3'b011: state_number = 0;   // STRD
+                            3'b101: state_number = 0;   // LDRH
+                            3'b110: state_number = 0;   // LDRSB
+                            3'b111: state_number = 0;   // LDRSH
+                        endcase
+                    end 
+
+                    // Subtract
+                    else begin
+                        case({instruction[20], instruction[6], instruction[5]})                        
+                            3'b001: state_number = 0;   // STRH
+                            3'b010: state_number = 0;   // LDRD
+                            3'b011: state_number = 0;   // STRD
+                            3'b101: state_number = 0;   // LDRH
+                            3'b110: state_number = 0;   // LDRSB
+                            3'b111: state_number = 0;   // LDRSH
+                        endcase
+                    end
+                end
+            end
+
+            // Post-Indexed
+            else begin
+                    // Add
+                    if(instruction[23] == 1) begin
+                        case({instruction[20], instruction[6], instruction[5]})                        
+                            3'b001: state_number = 0;   // STRH
+                            3'b010: state_number = 0;   // LDRD
+                            3'b011: state_number = 0;   // STRD
+                            3'b101: state_number = 0;   // LDRH
+                            3'b110: state_number = 0;   // LDRSB
+                            3'b111: state_number = 0;   // LDRSH
+                        endcase
+                    end 
+
+                    // Subtract
+                    else begin
+                        case({instruction[20], instruction[6], instruction[5]})                        
+                            3'b001: state_number = 0;   // STRH
+                            3'b010: state_number = 0;   // LDRD
+                            3'b011: state_number = 0;   // STRD
+                            3'b101: state_number = 0;   // LDRH
+                            3'b110: state_number = 0;   // LDRSB
+                            3'b111: state_number = 0;   // LDRSH
+                        endcase
+                    end
+            end   
         end
     end
 
