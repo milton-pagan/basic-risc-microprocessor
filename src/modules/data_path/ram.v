@@ -20,7 +20,7 @@ always @(enable, read_write, address, data_in, data_length)
         moc <= 1'b0;
         case(data_length)
             BYTE:
-            begin
+            if(!sig) begin
                 if (read_write)
                 begin
                     data_out = 0;
@@ -32,12 +32,24 @@ always @(enable, read_write, address, data_in, data_length)
                     memory[address] = data_in[7:0];
                 end
             end
+
+            else begin
+                if (read_write) begin
+                    data_out = 0;
+                    data_out = $signed(memory[address]);
+                end
+                
+                else begin
+                    memory[address] = (data_in[7:0]);
+                end
+            end
+
             HALFWORD:
-            begin
+            if(!sig) begin
                 if (read_write)
                 begin
                     data_out       = 0;
-                    data_out[15:8] = memory[address];
+                    data_out[15:8] = (memory[address]);
                     data_out[7:0]  = memory[address + 1];
                 end
                 
@@ -47,6 +59,22 @@ always @(enable, read_write, address, data_in, data_length)
                     memory[address + 1] = data_in[7:0];
                 end
             end
+
+            else begin
+                if (read_write)
+                begin
+                    data_out       = 0;
+                    data_out[31:8] = $signed(memory[address]);
+                    data_out[7:0]  = memory[address + 1];
+                end
+                
+                else
+                begin
+                    memory[address]     = data_in[15:8];
+                    memory[address + 1] = data_in[7:0];
+                end
+            end
+
             WORD:
             begin
                 if (read_write)
@@ -89,7 +117,7 @@ always @(enable, read_write, address, data_in, data_length)
                         memory[temp + 1] = data_in[23:16];
                         memory[temp + 2] = data_in[15:8];
                         memory[temp + 3] = data_in[7:0];
-                        temp             = temp + 4;
+                        #1 temp             = temp + 4;
                     end
                 end
             end

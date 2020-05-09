@@ -6,13 +6,13 @@ module ram_test();
     wire mfc;
     
     // Inputs
-    reg enable, read_write;
+    reg enable, read_write, sig;
     reg [1:0] data_length;
     reg[8:0] address;
     reg [31:0] data_in;
     
     // Modules
-    ram ram1(data_out, mfc, enable, read_write, data_length, address, data_in);
+    ram ram1(data_out, mfc, enable, read_write, sig, data_length, address, data_in);
     
     // Other
     integer fi, fo, i;
@@ -27,6 +27,7 @@ module ram_test();
         address    = 9'd0;
         read_write = 1'b0;
         enable     = 1'b0;
+        sig = 0;
         while(!$feof(fi))
         begin
             i                    = $fscanf(fi, "%d", data);
@@ -60,7 +61,8 @@ module ram_test();
     begin
     data_length = 2'd0;
     address     = 9'd0;
-    data_in     = 32'h0000000A;
+    data_in     = 32'h000000FF;
+    sig = 1;
     enable      = 1'b1;
     #5 enable   = 1'b0;
     end
@@ -68,7 +70,7 @@ module ram_test();
     #10 begin
     data_length = 2'd1;
     address     = 9'd2;
-    data_in     = 32'h00000400;
+    data_in     = 32'h0000FFFF;
     enable      = 1'b1;
     #5 enable   = 1'b0;
     end
@@ -137,7 +139,7 @@ module ram_test();
         
         $display("\n*** RAM TEST ***");
         $display ("\ndata_out data_in  enable read_write data_length address mfc \t\t   time");
-        $monitor("%h %h   %b \t     %b \t\t %b \t  %h\t %b %d", data_out, data_in, enable, read_write, data_length, address, mfc, $time);
+        $monitor("%b %h   %b \t     %b \t\t %b \t  %h\t %b %b %d", data_out, data_in, enable, read_write, data_length, address, mfc, sig, $time);
     end
     
     always @(negedge enable)

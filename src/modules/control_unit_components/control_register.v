@@ -13,13 +13,13 @@ module control_register(output reg fr_ld,
                         select,
                         ma,
                         mb,
-                        mc,
+                        output reg [2:0] mc,
                         output reg [2:0] N,
                         output reg [4:0] op,
                         output reg [9:0] cr,
                         output reg [9:0] curr_state,
                         input clk,
-                        input [38:0] data_in,
+                        input [39:0] data_in,
                         input [9:0] current_state);
     
     always @(posedge clk)

@@ -3,11 +3,11 @@
 	ALU Implementation
 	
 	Group:
-		Dionel Mart�nez, dionel.martinez@upr.edu (Author)
-		Milton E. Pag�n, milton.pagan1@upr.edu
+		Dionel Martínez, dionel.martinez@upr.edu (Author)
+		Milton E. Pagán, milton.pagan1@upr.edu
 */
 
-module ALU(	input [31:0] A,B,				// 32-bit Inputs
+module alu(	input [31:0] A,B,				// 32-bit Inputs
 			input Cin,						// Carry-In
 			input [4:0] operation,			// 16 distinc operations
 			output reg [31:0] result,		// 32-bit Output
@@ -27,28 +27,18 @@ module ALU(	input [31:0] A,B,				// 32-bit Inputs
 					AND = SUB + 5'b1,		// 3 logical and
 					NAND = AND + 5'b1,		// 4 logical nand
 					OR = NAND + 5'b1,		// 5 logical or
-					NOR = OR + 5'b1,		// 6 logical nor
-					XOR = NOR + 5'b1,		// 7 logical xor
-					XNOR = XOR + 5'b1,		// 8 logical xnor
-					LSL = XNOR + 5'b1,		// 9 logical shift left
-					LSR = LSL + 5'b1,		// 10 logical shift right
-					RL = LSR + 5'b1,		// 11 rotate left
-					RR = RL + 5'b1,			// 12 rotate right
-					NOTA = RR + 5'b1,		// 13 logical not
-					TwoC = NOTA + 5'b1,		// 14 Two's Complement
-					AREM = TwoC + 5'b1,		// 15 A's bits Appear Unmodified
-
-					// Added after Happy Hour
-
-					ISUB = AREM + 5'b1,		// 16 B - A
-					MSUBNC = ISUB + 5'b1,	// 17 A - B - (not Cin)
-					IMSUBNC = MSUBNC + 5'b1,// 18 B - A - (not Cin)
-					BREM = IMSUBNC + 5'b1,	// 19 B's bits Appear Unmodified
-					ANDNB = BREM + 5'b1,	// 20 A and (not B)
-					NOTB = ANDNB + 5'b1,	// 21 not B
-					AP4 = NOTB + 5'b1,		// 22 A + 4
-					MSUM4 = AP4 + 5'b1;		// 23 A + B + 4
-
+					XOR = OR + 5'b1,		// 6 logical xor
+					NOTA = XOR + 5'b1,		// 7 logical not
+					TwoC = NOTA + 5'b1,		// 8 Two's Complement
+					ISUB = TwoC + 5'b1,		// 9 B - A
+					MSUBNC = ISUB + 5'b1,	// 10 A - B - (not Cin)
+					IMSUBNC = MSUBNC + 5'b1,// 11 B - A - (not Cin)
+					ANDNB = IMSUBNC + 5'b1,	// 12 A and (not B)
+					NOTB = ANDNB + 5'b1,	// 13 not B
+					AREM = 5'd15,			// 15 A's bits Appear Unmodified
+					BREM = 5'd19,			// 19 B's bits Appear Unmodified
+					AP4 = 5'd22,			// 22 A + 4
+					MSUM4 = 5'd23;			// 23 A + B + 4
 
 				
 	always @ (A,B,Cin,operation)
@@ -108,14 +98,6 @@ module ALU(	input [31:0] A,B,				// 32-bit Inputs
 				C = 1'b0;
 			end
 			
-			NOR:
-			begin
-				result = ~(A | B);
-				Z = result == 32'b0;
-				N = result[31] == 1'b1;
-				C = 1'b0;
-			end
-			
 			XOR:
 			begin
 				result = A ^ B;
@@ -123,48 +105,7 @@ module ALU(	input [31:0] A,B,				// 32-bit Inputs
 				N = result[31] == 1'b1;
 				C = 1'b0;
 			end
-			
-			XNOR:
-			begin
-				result = ~(A ^ B);
-				Z = result == 32'b0;
-				N = result[31] == 1'b1;
-				C = 1'b0;
-			end
-			
-			LSL:
-			begin
-				result = A << 1;
-				C = A[31]; 
-				Z = result == 32'b0;
-				N = result[31] == 1'b1;
-				C = 1'b0;
-			end
-			
-			LSR:
-			begin
-				result = A >> 1;
-				C = A[0];				
-				Z = result == 32'b0;
-				N = result[31] == 1'b1;
-			end
-			
-			RL:
-			begin
-				result = {A[30:0], A[31]};			
-				Z = result == 32'b0;
-				N = result[31] == 1'b1;
-				C = 1'b0;
-			end
-			
-			RR:
-			begin
-				result = {A[0], A[31:1]};			
-				Z = result == 32'b0;
-				N = result[31] == 1'b1;
-				C = 1'b0;
-			end
-			
+
 			NOTA:
 			begin
 				result = ~A;

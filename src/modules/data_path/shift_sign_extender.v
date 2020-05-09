@@ -64,7 +64,7 @@ always @(instruction, Rm) begin
         
         // Branch and Branch with Link
         3'b101: begin
-            out = {{8{instruction[23]}}, instruction[23:0]};
+            out = {{8{instruction[23]}}, instruction[23:0]} << 2;
         end
         
 endcase
