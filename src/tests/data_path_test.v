@@ -12,7 +12,7 @@ module data_path_test();
     reg [8:0] temp;
     reg [7:0] data;
 
-    initial #500 $finish;
+    initial #5000 $finish;
 
     // Starting Test
     initial $display("\n|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--STARTING DATA PATH TEST--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|");
@@ -20,12 +20,12 @@ module data_path_test();
     // Clock
     initial begin
         main_clk                    = 0;
-        repeat (100) #5 main_clk    = ~main_clk;
+        repeat (1000) #5 main_clk    = ~main_clk;
     end
 
     initial
         begin
-            fi = $fopen("res/ram_input_files/test_program.txt", "r");
+            fi = $fopen("res/ram_input_files/testcode_arm1.txt", "r");
             temp = 9'd0;
             while (!$feof(fi))
                 begin
@@ -38,20 +38,13 @@ module data_path_test();
 
     initial begin
         reset <= 1;
-        data_path.ram.memory[50] = 0;
-        data_path.ram.memory[51] = 0;
-        data_path.ram.memory[52] = 0;
-        data_path.ram.memory[53] = 8'd5;
-        data_path.ram.memory[54] = 0;
-        data_path.ram.memory[55] = 0;
-        data_path.ram.memory[56] = 0;
-        data_path.ram.memory[57] = 8'd5;
         #6 reset = 0;
     end
 
     initial begin
-        $display("\n    CS        PC         MAR         LR         R1         R2         R3         R5      ALU_OUT \t       Time");
-        $monitor("\n %d %d %d %d %d %d %d %d %d %b %d %d %d %d",
+
+        $display("\n    CS        PC         MAR         LR         R1         R2         R3         R5      ALU_OUT         Instruction Register  \t\t\t     Time");
+        $monitor("\n %d %d %d %d %d %d %d %d %d \t   %b %d",
             current_state,                                  // Current States
             data_path.register_file.reg_to_mult[15],        // PC
             data_path.address,                              // MAR
@@ -61,14 +54,11 @@ module data_path_test();
             data_path.register_file.reg_to_mult[3],         // R3
             data_path.register_file.reg_to_mult[5],         // R5
             data_path.alu_out,                              // ALU out
-            data_path.ir,
-            data_path.PA,
-            data_path.B,
-            data_path.SC,
+            data_path.ir,                                   // IR
             $time);                                         // Simulation Time
     end
     //Test Finished
-    initial #500 $display("\n|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--DATA PATH TEST FINISHED--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|\n");
+    initial #5000 $display("\n|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--DATA PATH TEST FINISHED--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|\n");
 
 
 endmodule

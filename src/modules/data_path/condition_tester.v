@@ -21,20 +21,20 @@ module condition_tester(output reg cond,
     // Z N C V
     always @(flags_in, condition_code)
         case (condition_code)
-            EQ: cond    = flags_in[0] == 1 ? 1:0;
-            NE: cond    = flags_in[0] == 0 ? 1:0;
-            CS_HS: cond = flags_in[2] == 1 ? 1:0;
-            CC_LO: cond = flags_in[2] == 0 ? 1:0;
-            MI: cond    = flags_in[1] == 1 ? 1:0;
-            PL: cond    = flags_in[0] == 0 ? 1:0;
-            VS: cond    = flags_in[3] == 1 ? 1:0;
-            VC: cond    = flags_in[3] == 0 ? 1:0;
-            HI: cond    = flags_in[2] == 1 && flags_in[0] == 0 ? 1:0;
-            LS: cond    = flags_in[2] == 0 || flags_in[0] == 1 ? 1:0;
-            GE: cond    = flags_in[1] == flags_in[3] ? 1:0;
-            LT: cond    = flags_in[1] != flags_in[3] ? 1:0;
-            GT: cond    = flags_in[0] == 0 && flags_in[1] == flags_in[3] ? 1:0;
-            LE: cond    = flags_in[0] == 1 || flags_in[1] != flags_in[3] ? 1:0;
+            EQ: cond    = flags_in[3] == 1 ? 1:0;
+            NE: cond    = flags_in[3] == 0 ? 1:0;
+            CS_HS: cond = flags_in[1] == 1 ? 1:0;
+            CC_LO: cond = flags_in[1] == 0 ? 1:0;
+            MI: cond    = flags_in[2] == 1 ? 1:0;
+            PL: cond    = flags_in[2] == 0 ? 1:0;
+            VS: cond    = flags_in[0] == 1 ? 1:0;
+            VC: cond    = flags_in[0] == 0 ? 1:0;
+            HI: cond    = flags_in[1] == 1 && flags_in[3] == 0 ? 1:0;
+            LS: cond    = flags_in[1] == 0 || flags_in[3] == 1 ? 1:0;
+            GE: cond    = flags_in[2] == flags_in[0] ? 1:0;
+            LT: cond    = flags_in[2] != flags_in[0] ? 1:0;
+            GT: cond    = flags_in[3] == 0 && flags_in[2] == flags_in[0] ? 1:0;
+            LE: cond    = flags_in[3] == 1 || flags_in[2] != flags_in[0] ? 1:0;
             AL: cond    = 1;
         endcase
     

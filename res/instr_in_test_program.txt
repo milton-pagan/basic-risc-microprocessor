@@ -4,4 +4,6 @@ ADD 32 bit Imm Sft Op (R1 + 40 -> R1)
 ADDS 32 bit imm Sft Op (R1 + 40 -> R1)
 B Offset = 0
 BL Offset = 2
-LDRD 
+LDRD Imm (RAM 50-57 -> R2-R3)
+STRD Imm (R2-R3 -> 100-107)
+

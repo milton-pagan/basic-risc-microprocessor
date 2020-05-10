@@ -19,7 +19,7 @@ module alu_test;
 	wire C,N,V,Z;					// Condition Codes
 
 	// ALU Initialization
-	ALU alu(A,B,Cin,op,result,C,N,V,Z);
+	alu alu(A,B,Cin,op,result,C,N,V,Z);
 
 	initial #500 $finish;			// Simulation Time
 	

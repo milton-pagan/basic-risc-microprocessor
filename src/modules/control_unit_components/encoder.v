@@ -338,7 +338,7 @@ begin
                         case({instruction[20], instruction[6], instruction[5]})                        
                             3'b001: state_number = 104;   // STRH
                             3'b010: state_number = 184;   // LDRD
-                            3'b011: state_number = 0;   // STRD
+                            3'b011: state_number = 207;   // STRD
                             3'b101: state_number = 127;   // LDRH
                             3'b110: state_number = 146;   // LDRSB
                             3'b111: state_number = 165;   // LDRSH
@@ -350,7 +350,7 @@ begin
                         case({instruction[20], instruction[6], instruction[5]})                        
                             3'b001: state_number = 114;   // STRH
                             3'b010: state_number = 192;   // LDRD
-                            3'b011: state_number = 0;   // STRD
+                            3'b011: state_number = 217;   // STRD
                             3'b101: state_number = 135;   // LDRH
                             3'b110: state_number = 154;   // LDRSB
                             3'b111: state_number = 173;   // LDRSH
@@ -365,7 +365,7 @@ begin
                         case({instruction[20], instruction[6], instruction[5]})                        
                             3'b001: state_number = 106;   // STRH
                             3'b010: state_number = 186;   // LDRD
-                            3'b011: state_number = 0;   // STRD
+                            3'b011: state_number = 209;   // STRD
                             3'b101: state_number = 129;   // LDRH
                             3'b110: state_number = 148;   // LDRSB
                             3'b111: state_number = 167;   // LDRSH
@@ -377,7 +377,7 @@ begin
                         case({instruction[20], instruction[6], instruction[5]})                        
                             3'b001: state_number = 116;   // STRH
                             3'b010: state_number = 194;   // LDRD
-                            3'b011: state_number = 0;   // STRD
+                            3'b011: state_number = 219;   // STRD
                             3'b101: state_number = 137;   // LDRH
                             3'b110: state_number = 156;   // LDRSB
                             3'b111: state_number = 175;   // LDRSH
@@ -393,7 +393,7 @@ begin
                         case({instruction[20], instruction[6], instruction[5]})                        
                             3'b001: state_number = 108;   // STRH
                             3'b010: state_number = 188;   // LDRD
-                            3'b011: state_number = 0;   // STRD
+                            3'b011: state_number = 211;   // STRD
                             3'b101: state_number = 131;   // LDRH
                             3'b110: state_number = 150;   // LDRSB
                             3'b111: state_number = 169;   // LDRSH
@@ -405,7 +405,7 @@ begin
                         case({instruction[20], instruction[6], instruction[5]})                        
                             3'b001: state_number = 118;   // STRH
                             3'b010: state_number = 196;   // LDRD
-                            3'b011: state_number = 0;   // STRD
+                            3'b011: state_number = 221;   // STRD
                             3'b101: state_number = 139;   // LDRH
                             3'b110: state_number = 158;   // LDRSB
                             3'b111: state_number = 177;   // LDRSH
@@ -425,7 +425,7 @@ begin
                         case({instruction[20], instruction[6], instruction[5]})                        
                             3'b001: state_number = 105;   // STRH
                             3'b010: state_number = 185;   // LDRD
-                            3'b011: state_number = 0;   // STRD
+                            3'b011: state_number = 208;   // STRD
                             3'b101: state_number = 128;   // LDRH
                             3'b110: state_number = 147;   // LDRSB
                             3'b111: state_number = 166;   // LDRSH
@@ -437,7 +437,7 @@ begin
                         case({instruction[20], instruction[6], instruction[5]})                        
                             3'b001: state_number = 115;   // STRH
                             3'b010: state_number = 193;   // LDRD
-                            3'b011: state_number = 0;   // STRD
+                            3'b011: state_number = 218;   // STRD
                             3'b101: state_number = 136;   // LDRH
                             3'b110: state_number = 155;   // LDRSB
                             3'b111: state_number = 174;   // LDRSH
@@ -452,7 +452,7 @@ begin
                         case({instruction[20], instruction[6], instruction[5]})                        
                             3'b001: state_number = 107;   // STRH
                             3'b010: state_number = 187;   // LDRD
-                            3'b011: state_number = 0;   // STRD
+                            3'b011: state_number = 210;   // STRD
                             3'b101: state_number = 130;   // LDRH
                             3'b110: state_number = 149;   // LDRSB
                             3'b111: state_number = 168;   // LDRSH
@@ -464,7 +464,7 @@ begin
                         case({instruction[20], instruction[6], instruction[5]})                        
                             3'b001: state_number = 117;   // STRH
                             3'b010: state_number = 195;   // LDRD
-                            3'b011: state_number = 0;   // STRD
+                            3'b011: state_number = 220;   // STRD
                             3'b101: state_number = 138;   // LDRH
                             3'b110: state_number = 157;   // LDRSB
                             3'b111: state_number = 176;   // LDRSH
@@ -480,7 +480,7 @@ begin
                         case({instruction[20], instruction[6], instruction[5]})                        
                             3'b001: state_number = 111;   // STRH
                             3'b010: state_number = 190;   // LDRD
-                            3'b011: state_number = 0;   // STRD
+                            3'b011: state_number = 214;   // STRD
                             3'b101: state_number = 133;   // LDRH
                             3'b110: state_number = 152;   // LDRSB
                             3'b111: state_number = 171;   // LDRSH 
@@ -492,7 +492,7 @@ begin
                         case({instruction[20], instruction[6], instruction[5]})                        
                             3'b001: state_number = 121;   // STRH
                             3'b010: state_number = 198;      // LDRD
-                            3'b011: state_number = 0;       // STRD
+                            3'b011: state_number = 224;       // STRD
                             3'b101: state_number = 141;   // LDRH
                             3'b110: state_number = 160;   // LDRSB
                             3'b111: state_number = 179;   // LDRSH
