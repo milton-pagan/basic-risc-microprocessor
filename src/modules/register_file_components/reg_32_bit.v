@@ -4,6 +4,7 @@ module reg_32_bit(
     input load_enable, clk
 );
 
+
 always @(posedge clk)
     if(load_enable) data_out <= data_in;
 endmodule

@@ -1,7 +1,8 @@
 module ram(output reg[31:0] data_out,
-           output reg mfc,
+           output reg moc,
            input enable,
            read_write,
+           sig,
            input [1:0] data_length,
            input[8:0] address,
            input[31:0] data_in);
@@ -16,10 +17,10 @@ reg [7:0] memory[0:511];
 always @(enable, read_write, address, data_in, data_length)
     if (enable)
     begin
-        mfc <= 1'b0;
+        moc <= 1'b0;
         case(data_length)
             BYTE:
-            begin
+            if(!sig) begin
                 if (read_write)
                 begin
                     data_out = 0;
@@ -31,12 +32,24 @@ always @(enable, read_write, address, data_in, data_length)
                     memory[address] = data_in[7:0];
                 end
             end
+
+            else begin
+                if (read_write) begin
+                    data_out = 0;
+                    data_out = $signed(memory[address]);
+                end
+                
+                else begin
+                    memory[address] = (data_in[7:0]);
+                end
+            end
+
             HALFWORD:
-            begin
+            if(!sig) begin
                 if (read_write)
                 begin
                     data_out       = 0;
-                    data_out[15:8] = memory[address];
+                    data_out[15:8] = (memory[address]);
                     data_out[7:0]  = memory[address + 1];
                 end
                 
@@ -46,6 +59,22 @@ always @(enable, read_write, address, data_in, data_length)
                     memory[address + 1] = data_in[7:0];
                 end
             end
+
+            else begin
+                if (read_write)
+                begin
+                    data_out       = 0;
+                    data_out[31:8] = $signed(memory[address]);
+                    data_out[7:0]  = memory[address + 1];
+                end
+                
+                else
+                begin
+                    memory[address]     = data_in[15:8];
+                    memory[address + 1] = data_in[7:0];
+                end
+            end
+
             WORD:
             begin
                 if (read_write)
@@ -88,16 +117,16 @@ always @(enable, read_write, address, data_in, data_length)
                         memory[temp + 1] = data_in[23:16];
                         memory[temp + 2] = data_in[15:8];
                         memory[temp + 3] = data_in[7:0];
-                        temp             = temp + 4;
+                        #1 temp             = temp + 4;
                     end
                 end
             end
         endcase
         
-        mfc <= 1'b1;
+        moc <= 1'b1;
     end
 
 else
-mfc <= 1'b0;
+moc <= 1'b0;
 
 endmodule
