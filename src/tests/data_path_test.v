@@ -20,9 +20,10 @@ module data_path_test();
     // Clock
     initial begin
         main_clk                    = 0;
-        repeat (1000) #5 main_clk    = ~main_clk;
+        repeat (399) #5 main_clk    = ~main_clk;
     end
 
+    // Precharge Memory
     initial
         begin
             fi = $fopen("res/ram_input_files/testcode_arm1.txt", "r");
@@ -56,6 +57,14 @@ module data_path_test();
             data_path.alu_out,                              // ALU out
             data_path.ir,                                   // IR
             $time);                                         // Simulation Time
+
+        #2000
+        $display("\n\n***************** MEMORY CONTENT *****************");
+        for(i = 0; i < 512; i += 4) begin
+            $display("\nLOC[%0d-%0d]\t %b%b%b%b", i, i+3, data_path.ram.memory[i], data_path.ram.memory[i + 1], data_path.ram.memory[i + 2], data_path.ram.memory[i + 3]); 
+        end
+
+
     end
     //Test Finished
     initial #5000 $display("\n|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--DATA PATH TEST FINISHED--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|\n");

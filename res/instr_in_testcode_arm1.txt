@@ -1,0 +1,11 @@
+1.  55  Data processing                     --> R1 AND 0, initialize R0 to 0
+2. 105  Data processing                     --> R0 OR #40, intialize R1 to 40
+3. 155  Load Byte Register Register Offset  --> Address 40 into R2, address 40 = 11
+4. 235  Load Byte Immediate Offset          --> Address (40 + 2) into R3, address 40+2 =  7
+5. 315  Data processing                     --> R0 + 0 into R5, initialize R5 to 0, R0 = 0
+6. 365  Data processing                     --> R2 + R5 into R5, R2 = 11, R5 = 0, Sum 11 to R5
+7. 415  Data processing with flags          --> R3 - 1 into R3, decrease counter
+8. 465  Branch NEQ cond                     --> Offset = -3, Jump to LOC -12 = 20 --> Instruction 5
+9. 1405 Store Byte Immediate Offset         --> R5 into R1 + 3 = 43, R5 = 11 * 7  = 77
+10.1485 Branch                              --> Offset = 1, Jump to Instruction 12
+12.1535 Branch                              --> Offset = -1, Jump to same Instruction
