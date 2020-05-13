@@ -1,5 +1,5 @@
 1.  55  Data processing                     --> R1 AND 0, initialize R0 to 0
-2. 105  Data processing                     --> R0 OR #40, intialize R1 to 40
+2. 105  Data processing                     --> R0 OR #40, initialize R1 to 40
 3. 155  Load Byte Register Register Offset  --> Address 40 into R2, address 40 = 11
 4. 235  Load Byte Immediate Offset          --> Address (40 + 2) into R3, address 40+2 =  7
 5. 315  Data processing                     --> R0 + 0 into R5, initialize R5 to 0, R0 = 0

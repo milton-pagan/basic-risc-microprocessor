@@ -34,7 +34,7 @@ module alu_test;
 		A = 32'b0;
 		B = 32'b0;
 		Cin = 1'b1;
-		op = 4'b0;
+		op = 4'b100;
 	join
 	
 	initial #10 fork
@@ -55,7 +55,7 @@ module alu_test;
 	initial #300 begin
 		A = 32'b01111111_11111111_11111111_11111101;			
 		B = 32'b10;
-		op = 4'b0;
+		op = 4'b100;
 	end
 	
 	initial #310 repeat (1) #10 A += B;
