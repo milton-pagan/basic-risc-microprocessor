@@ -20,13 +20,13 @@ module data_path_test();
     // Clock
     initial begin
         main_clk                    = 0;
-        repeat (399) #5 main_clk    = ~main_clk;
+        repeat (800) #5 main_clk    = ~main_clk;
     end
 
     // Precharge Memory
     initial
         begin
-            fi = $fopen("res/ram_input_files/testcode_arm1.txt", "r");
+            fi = $fopen("res/ram_input_files/testcode_arm2.txt", "r");
             temp = 9'd0;
             while (!$feof(fi))
                 begin
@@ -59,7 +59,7 @@ module data_path_test();
             data_path.flags,                                // FLAGS {ZNCV}
 //            $time);                                         // Simulation Time
             );
-        #2000
+        #4000
         $display("\n\n***************** MEMORY CONTENT *****************");
         for(i = 0; i < 512; i += 4) begin
             $display("\nLOC[%0d-%0d]\t %b%b%b%b", i, i+3, data_path.ram.memory[i], data_path.ram.memory[i + 1], data_path.ram.memory[i + 2], data_path.ram.memory[i + 3]);

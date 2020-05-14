@@ -1,0 +1,11 @@
+1.  Data Processing AND --> R1 AND 0 into R0 
+2.  Data Processing OR --> R0(0) OR #34 into R1 
+3.  Data Processing OR --> R0(0) OR #152 into R4
+4.  Data Processing Shift PASSB --> R4=152 into R10 
+5.  Load Immediate Post-Indexed --> ADDR R10=152 into R3; Content = -11; R10+=4
+6.  Data Processing Shift SUM --> R1=34 + R3=-11 into R2=23
+7.  Data Processing Shift PASSB --> R2=23 into R5 
+8.  Store Immediate Post-Indexed --> Store content in R5=23 into ADDR R10=156; R10+=4 
+9.  Data Processing Shift SUB --> R1=34 - R2=23 into R5
+10. Store Immediate Post-Indexed --> Store content in R5=11 into ADDR R10=160; R10+=4 
+11.
