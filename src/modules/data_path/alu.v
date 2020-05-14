@@ -69,7 +69,7 @@ module alu(	input [31:0] A,B,				// 32-bit Inputs
 			begin
 				result = A - B;
 				temp = {1'b0, A} - {1'b0, B};
-				V = A[31] == B[31] && result[31] != A[31];
+				V = A[31] == B[31] && result[31] == B[31];
 				Z = result == 32'b0;
 				N = result[31] == 1'b1;
 				C = 1'b0;
@@ -115,7 +115,7 @@ module alu(	input [31:0] A,B,				// 32-bit Inputs
 			begin
 				result = B - A;
 				temp = {1'b0, B} - {1'b0, A};
-				V = A[31] == B[31] && result[31] != A[31];
+				V = A[31] == B[31] && result[31] == A[31];
 				Z = result == 32'b0;
 				N = result[31] == 1'b1;
 				C = 1'b0;
@@ -189,7 +189,7 @@ module alu(	input [31:0] A,B,				// 32-bit Inputs
 			
 			TST:
 			begin
-				//result = A & B;
+				result = A & B;
 				Z = result == 32'b0;
 				N = result[31] == 1'b1;
 				C = 1'b0;
@@ -198,7 +198,7 @@ module alu(	input [31:0] A,B,				// 32-bit Inputs
 
 			TEQ:
 			begin
-				//result = A ^ B;
+				result = A ^ B;
 				Z = result == 32'b0;
 				N = result[31] == 1'b1;
 				C = 1'b0;
@@ -207,9 +207,9 @@ module alu(	input [31:0] A,B,				// 32-bit Inputs
 
 			CMP:
 			begin
-				//result = A - B;
+				result = A - B;
 				temp = {1'b0, A} - {1'b0, B};
-				V = A[31] == B[31] && result[31] != A[31];
+				V = A[31] == B[31] && result[31] == B[31];
 				Z = result == 32'b0;
 				N = result[31] == 1'b1;
 				C = 1'b0;	
@@ -217,7 +217,7 @@ module alu(	input [31:0] A,B,				// 32-bit Inputs
 
 			CMN:
 			begin
-				//result = A + B;
+				result = A + B;
 				temp = {1'b0, A} + {1'b0, B};
 				C = temp[32];
 				V = A[31] == B[31] && result[31] != A[31];

@@ -60,7 +60,7 @@ module data_path(output[9:0] current_state, input main_clk, reset);
     
     ram ram(ram_out, MOC, MOV, RW, SIG, DL, address[8:0], mdr_out);
     
-    shift_sign_extender shift_sign_extender(shift_out, C, ir, PB);
+    shift_sign_extender shift_sign_extender(shift_out, Cin, ir, PB);
     
     register_32_bit instruction_register(ir, ram_out, IRld, main_clk);
     register_32_bit mar(address, alu_out, MARld, main_clk);
