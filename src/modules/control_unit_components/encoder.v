@@ -504,6 +504,10 @@ begin
 
     // ! *** DATA PROCESSING ***
 
+    else if((instruction[27:25] == 3'b001 || instruction[27:25] == 3'b000) && (instruction[24:21] == 4'b1000 || instruction[24:21] == 4'b1001 || instruction[24:21] == 4'b1010 || instruction[24:21] == 4'b1011)) begin
+        state_number = 10'd14;
+    end
+
     else if(instruction[27:25] == 3'b001 || instruction[27:25] == 3'b000)
     begin
         // With S

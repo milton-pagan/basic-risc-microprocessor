@@ -17,3 +17,20 @@
 17. Data Processing Shift SUM --> R0=0 + (R3=-11 : ROR=10):=-41943041 into R5
 18. Store Immediate Post-Indexed --> Store content in R5=-41943041 into ADDR R10=176; R10+=4 
 19. Data Processing Shift S SUB-FLAGS --> R2=23 - R1=34 
+20. Branch with Link COND LE --> Offset = 1 * 4, COND should be True
+21. Data Processing AND --> R1 & 0 into R14; This instruction is jumped because of previous branch
+22. Store Immediate Post-Indexed --> Store content in R14=80 into ADDR R10=180; R10+=4; R14 is LR
+23. Load Immediate Pre-Indexed SUB --> Load Content=-1073741824 in ADDR R4=152 - 4 into R12; R4-=4 
+24. Load Immediate Pre-Indexed SUB --> Load Content=-1610612736 in ADDR R4=148 - 4 into R11; R4-=4 
+25. Data Processing Shift ADD_F --> R12=-1073741824 + R11=-1073741824  
+26. Branch COND VS=Overflow --> Offset = 1 * 4, COND should be True
+27. Data Processing AND --> R1 & 0 into R5; This instruction is jumped because of previous branch 
+28. Store Immediate Post-Indexed --> Store content in R5=-41943041 into ADDR R10=184; R10+=4
+29. Data Processing Shift SUM --> R1=34 + R11=-1610612736 into R5
+30. Branch COND VS=Overflow --> Offset = 1 * 4, COND should be True since flags haven't been updated since last overflow 
+31. Data Processing AND --> R1 & 0 into R5; This instruction is jumped because of previous branch 
+32. Store Immediate Post-Indexed --> Store content in R5=-1610612702 into ADDR R10=188; R10+=4
+33. Data Processing OR --> R0=0 OR #4 into R1
+34. Load Register Pre-Indexed SUB --> Load content=-1610612702 in ADDR R10=192 - R1=4 into R12; R10-=4
+35. Store Register Pre-Indexed --> Store content in R12=-1610612702 into ADDR R10=188 + R1=4; R10+=4
+36. Branch --> Offset = -1 * 4; Infinite Branch

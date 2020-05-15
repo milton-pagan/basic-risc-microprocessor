@@ -57,6 +57,7 @@ module data_path_test();
             data_path.alu_out,                              // ALU out
             data_path.ir,                                   // IR
             data_path.flags,                                // FLAGS {ZNCV}
+            data_path.register_file.reg_to_mult[0],
 //            $time);                                         // Simulation Time
             );
         #4000
