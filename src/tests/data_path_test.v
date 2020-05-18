@@ -26,7 +26,7 @@ module data_path_test();
     // Precharge Memory
     initial
         begin
-            fi = $fopen("res/ram_input_files/testcode_arm2.txt", "r");
+            fi = $fopen("res/ram_input_files/testcode_arm3.txt", "r");
             temp = 9'd0;
             while (!$feof(fi))
                 begin
@@ -44,22 +44,26 @@ module data_path_test();
 
     initial begin
 
-        $display("\n    CS        PC         MAR         LR         R1         R2         R3         R5      ALU_OUT         Instruction Register  \t         ZNCV \t\t       Time");
-        $monitor("\n %d %d %d %d %d %d %d %d %d    %b \t %b",
+        $display("\n    CS        PC         MAR         LR         R1         R2         R4         R5         R7        R10        R12        R13      ALU_OUT           Instruction Register  \t\t ZNCV \t\t       Time");
+        $monitor("\n %d %d %d %d %d %d %d %d %d %d %d %d %d  \t %b \t %b",
             current_state,                                  // Current States
             data_path.register_file.reg_to_mult[15],        // PC
             data_path.address,                              // MAR
             data_path.register_file.reg_to_mult[14],        // LR
             data_path.register_file.reg_to_mult[1],         // R1
             data_path.register_file.reg_to_mult[2],         // R2
-            data_path.register_file.reg_to_mult[3],         // R3
+            data_path.register_file.reg_to_mult[4],         // R3
             data_path.register_file.reg_to_mult[5],         // R5
+            data_path.register_file.reg_to_mult[7],         // R5
+            data_path.register_file.reg_to_mult[10],        // R10
+            data_path.register_file.reg_to_mult[12],        // R12
+            data_path.register_file.reg_to_mult[13],        // R13
+
             data_path.alu_out,                              // ALU out
             data_path.ir,                                   // IR
             data_path.flags,                                // FLAGS {ZNCV}
-            data_path.register_file.reg_to_mult[0],
-//            $time);                                         // Simulation Time
-            );
+            $time);                                         // Simulation Time
+
         #4000
         $display("\n\n***************** MEMORY CONTENT *****************");
         for(i = 0; i < 512; i += 4) begin
