@@ -30,13 +30,13 @@ module alu(	input [31:0] A,B,				// 32-bit Inputs
 					ADDC 		= 5'b00101,		
 					SUBNC 		= 5'b00110,	
 					ISUBNC 		= 5'b00111,
-					AND_F 		= 5'b01000,
-					XOR_F		= 5'b01001,
-					SUB_F 		= 5'b01010,
-					ADD_F 		= 5'b01011,
-					OR 			= 5'b01100,
+					TST			= 5'b01000,
+					TEQ			= 5'b01001,
+					CMP			= 5'b01010,
+					CMN			= 5'b01011,
+					ORR			= 5'b01100,
 					PASS_B 		= 5'b01101,
-					ANDNB 		= 5'b01110,	
+					BIC			= 5'b01110,
 					NOTB 		= 5'b01111,	
 					PASS_A 		= 5'b10000,			
 					AP4 		= 5'b10001,			
@@ -50,7 +50,7 @@ module alu(	input [31:0] A,B,				// 32-bit Inputs
 				result = A + B;
 				temp = {1'b0, A} + {1'b0, B};
 				C = temp[32];
-				V = temp[31:0] > 32'b01111111_11111111_11111111_11111111;
+				V = A[31] == B[31] && result[31] != A[31];
 				Z = result == 32'b0;
 				N = result[31] == 1'b1;
 			end
@@ -60,7 +60,7 @@ module alu(	input [31:0] A,B,				// 32-bit Inputs
 				result = A + B + {31'b0,Cin};
 				temp = {1'b0, A} + {1'b0, B} + {32'b0, Cin};
 				C = temp[32];
-				V = temp[31:0] > 32'b01111111_11111111_11111111_11111111;
+				V = A[31] == B[31] && result[31] != A[31];
 				Z = result == 32'b0;
 				N = result[31] == 1'b1;
 			end
@@ -69,7 +69,7 @@ module alu(	input [31:0] A,B,				// 32-bit Inputs
 			begin
 				result = A - B;
 				temp = {1'b0, A} - {1'b0, B};
-				V = temp[31:0] + {32'b1} < 32'b10000000_00000000_00000000_00000001;
+				V = A[31] == B[31] && result[31] == B[31];
 				Z = result == 32'b0;
 				N = result[31] == 1'b1;
 				C = 1'b0;
@@ -81,14 +81,16 @@ module alu(	input [31:0] A,B,				// 32-bit Inputs
 				Z = result == 32'b0;
 				N = result[31] == 1'b1;
 				C = 1'b0;
+				V = 1'b0;
 			end
 			
-			OR:
+			ORR:
 			begin
 				result = A | B;
 				Z = result == 32'b0;
 				N = result[31] == 1'b1;
 				C = 1'b0;
+				V = 1'b0;
 			end
 			
 			XOR:
@@ -97,6 +99,7 @@ module alu(	input [31:0] A,B,				// 32-bit Inputs
 				Z = result == 32'b0;
 				N = result[31] == 1'b1;
 				C = 1'b0;
+				V = 1'b0;
 			end
 
 			PASS_A:
@@ -105,13 +108,14 @@ module alu(	input [31:0] A,B,				// 32-bit Inputs
 				Z = result == 32'b0;
 				N = result[31] == 1'b1;
 				C = 1'b0;
+				V = 1'b0;
 			end
 			
 			ISUB:
 			begin
 				result = B - A;
 				temp = {1'b0, B} - {1'b0, A};
-				V = temp[31:0] + {32'b1} < 32'b10000000_00000000_00000000_00000001;
+				V = A[31] == B[31] && result[31] == A[31];
 				Z = result == 32'b0;
 				N = result[31] == 1'b1;
 				C = 1'b0;
@@ -121,8 +125,8 @@ module alu(	input [31:0] A,B,				// 32-bit Inputs
 			begin
 				result = A - B - ~{31'b0,Cin};
 				temp = {1'b0, A} - {1'b0, B} - ~{32'b0, Cin};
-				C = temp[32];
-				V = temp[31:0] > 32'b01111111_11111111_11111111_11111111;
+				C = 1'b0;
+				V = A[31] == B[31] && result[31] != A[31];
 				Z = result == 32'b0;
 				N = result[31] == 1'b1;
 			end
@@ -131,8 +135,8 @@ module alu(	input [31:0] A,B,				// 32-bit Inputs
 			begin
 				result = B - A - ~{31'b0,Cin};
 				temp = {1'b0, B} - {1'b0, A} - ~{32'b0, Cin};
-				C = temp[32];
-				V = temp[31:0] > 32'b01111111_11111111_11111111_11111111;
+				C = 1'b0;
+				V = A[31] == B[31] && result[31] != A[31];
 				Z = result == 32'b0;
 				N = result[31] == 1'b1;
 			end
@@ -142,14 +146,16 @@ module alu(	input [31:0] A,B,				// 32-bit Inputs
 				Z = result == 32'b0;
 				N = result[31] == 1'b1;
 				C = 1'b0;
+				V = 1'b0;
 			end
 
-			ANDNB:
+			BIC:
 			begin
 				result = A & ~B;
 				Z = result == 32'b0;
 				N = result[31] == 1'b1;
 				C = 1'b0;
+				V = 1'b0;
 			end
 
 			NOTB:
@@ -158,6 +164,7 @@ module alu(	input [31:0] A,B,				// 32-bit Inputs
 				Z = result == 32'b0;
 				N = result[31] == 1'b1;
 				C = 1'b0;
+				V = 1'b0;
 			end
 
 			AP4:
@@ -165,7 +172,7 @@ module alu(	input [31:0] A,B,				// 32-bit Inputs
 				result = A + 32'b100;
 				temp = {1'b0, A} + 33'b100;
 				C = temp[32];
-				V = temp[31:0] > 32'b01111111_11111111_11111111_11111111;
+				V = A[31] != result[31];
 				Z = result == 32'b0;
 				N = result[31] == 1'b1;
 			end
@@ -175,45 +182,45 @@ module alu(	input [31:0] A,B,				// 32-bit Inputs
 				result = A + B + 32'b100;
 				temp = {1'b0, A} + {1'b0, B} + 33'b100;
 				C = temp[32];
-				V = temp[31:0] > 32'b01111111_11111111_11111111_11111111;
+				V = A[31] == B[31] && result[31] != A[31];
 				Z = result == 32'b0;
 				N = result[31] == 1'b1;
 			end
 			
-			AND_F:
+			TST:
 			begin
 				result = A & B;
 				Z = result == 32'b0;
 				N = result[31] == 1'b1;
 				C = 1'b0;
-			
+				V = 1'b0;
 			end
 
-			XOR_F:
+			TEQ:
 			begin
 				result = A ^ B;
 				Z = result == 32'b0;
 				N = result[31] == 1'b1;
 				C = 1'b0;
-				
+				V = 1'b0;
 			end
 
-			SUB_F:
+			CMP:
 			begin
 				result = A - B;
 				temp = {1'b0, A} - {1'b0, B};
-				V = temp[31:0] + {32'b1} < 32'b10000000_00000000_00000000_00000001;
+				V = A[31] == B[31] && result[31] == B[31];
 				Z = result == 32'b0;
 				N = result[31] == 1'b1;
 				C = 1'b0;	
 			end
 
-			ADD_F: 
+			CMN:
 			begin
 				result = A + B;
 				temp = {1'b0, A} + {1'b0, B};
 				C = temp[32];
-				V = temp[31:0] > 32'b01111111_11111111_11111111_11111111;
+				V = A[31] == B[31] && result[31] != A[31];
 				Z = result == 32'b0;
 				N = result[31] == 1'b1;
 			end

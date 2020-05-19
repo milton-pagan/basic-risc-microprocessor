@@ -20,13 +20,13 @@ module data_path_test();
     // Clock
     initial begin
         main_clk                    = 0;
-        repeat (399) #5 main_clk    = ~main_clk;
+        repeat (800) #5 main_clk    = ~main_clk;
     end
 
     // Precharge Memory
     initial
         begin
-            fi = $fopen("res/ram_input_files/testcode_arm1.txt", "r");
+            fi = $fopen("res/ram_input_files/testcode_arm3.txt", "r");
             temp = 9'd0;
             while (!$feof(fi))
                 begin
@@ -44,24 +44,30 @@ module data_path_test();
 
     initial begin
 
-        $display("\n    CS        PC         MAR         LR         R1         R2         R3         R5      ALU_OUT         Instruction Register  \t\t\t     Time");
-        $monitor("\n %d %d %d %d %d %d %d %d %d \t   %b %d",
+        $display("\n    CS        PC         MAR         LR         R1         R2         R4         R5         R7        R10        R12        R13      ALU_OUT           Instruction Register  \t\t ZNCV \t\t       Time");
+        $monitor("\n %d %d %d %d %d %d %d %d %d %d %d %d %d  \t %b \t %b",
             current_state,                                  // Current States
             data_path.register_file.reg_to_mult[15],        // PC
             data_path.address,                              // MAR
             data_path.register_file.reg_to_mult[14],        // LR
             data_path.register_file.reg_to_mult[1],         // R1
             data_path.register_file.reg_to_mult[2],         // R2
-            data_path.register_file.reg_to_mult[3],         // R3
+            data_path.register_file.reg_to_mult[4],         // R3
             data_path.register_file.reg_to_mult[5],         // R5
+            data_path.register_file.reg_to_mult[7],         // R5
+            data_path.register_file.reg_to_mult[10],        // R10
+            data_path.register_file.reg_to_mult[12],        // R12
+            data_path.register_file.reg_to_mult[13],        // R13
+
             data_path.alu_out,                              // ALU out
             data_path.ir,                                   // IR
+            data_path.flags,                                // FLAGS {ZNCV}
             $time);                                         // Simulation Time
 
-        #2000
+        #4000
         $display("\n\n***************** MEMORY CONTENT *****************");
         for(i = 0; i < 512; i += 4) begin
-            $display("\nLOC[%0d-%0d]\t %b%b%b%b", i, i+3, data_path.ram.memory[i], data_path.ram.memory[i + 1], data_path.ram.memory[i + 2], data_path.ram.memory[i + 3]); 
+            $display("\nLOC[%0d-%0d]\t %b%b%b%b", i, i+3, data_path.ram.memory[i], data_path.ram.memory[i + 1], data_path.ram.memory[i + 2], data_path.ram.memory[i + 3]);
         end
 
 
