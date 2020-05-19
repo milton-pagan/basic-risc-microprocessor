@@ -534,9 +534,12 @@ begin
  * Load/Store Multiple
 */
 
+    else if (instruction[27:25] == 3'b100) begin
+        // Inc/Dec After
+        if(!instruction[24])state_number = !instruction[20] ? 10'd234: 10'd247;
 
-    else if (instruction[27:25] == 100) begin
-        
+        // Inc/Dec Before
+        else state_number = !instruction[20] ? 10'd239: 10'd252;
     end
 
     // If instruction unknown go back to fetch

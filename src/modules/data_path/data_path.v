@@ -12,16 +12,18 @@
 `include "src/modules/data_path/multiplexers/mux_c.v"
 `include "src/modules/data_path/multiplexers/mux_d.v"
 `include "src/modules/data_path/multiplexers/mux_e.v"
+`include "src/modules/data_path/multiplexers/mux_f.v"
+`include "src/modules/data_path/address_incrementer.v"
 
 module data_path(output[9:0] current_state, input main_clk, reset);
     
     // Wires
-    wire[31:0] PA, PB, alu_out, B, E;
+    wire[31:0] PA, PB, alu_out, B, E, F;
     wire Z, N, V, C;
     wire[3:0] A, Cp, flags;
     wire[4:0] op_to_alu;
     
-    wire[31:0] ir, ram_out, mdr_out, address, shift_out;
+    wire[31:0] ir, ram_out, mdr_out, address, shift_out, inc_out;
     // Control Signals
     wire FRld,
     RFld,
@@ -33,22 +35,23 @@ module data_path(output[9:0] current_state, input main_clk, reset);
     SIG,
     Cin,
     MD,
-    ME;
-    wire[1:0] MA,
-    MB,
-    DL;
+    ME,
+    MF;
+    wire[2:0] MA,
+    MB;
+    wire[1:0] DL;
     wire[2:0] MC;
     wire[4:0] OP;
     wire MOC,
     cond;
 
-    wire[3:0] SA, SC;
+    wire[3:0] SA, SC, REG_SEL;
     
 
     
     // Modules
     
-    control_unit control_unit(FRld, RFld, IRld, MARld, MDRld, RW, MOV, SIG, Cin, MD, ME, MA, MB, MC, DL, OP, current_state, SA, SC, MOC, main_clk, cond, reset, ir);
+    control_unit control_unit(FRld, RFld, IRld, MARld, MDRld, RW, MOV, SIG, Cin, MD, ME, MF, MA, MB, MC, DL, OP, current_state, SA, SC, REG_SEL, MOC, main_clk, cond, reset, ir);
     
     alu alu(PA, B, Cin, op_to_alu, alu_out, C, N, V, Z);
 
@@ -63,13 +66,16 @@ module data_path(output[9:0] current_state, input main_clk, reset);
     shift_sign_extender shift_sign_extender(shift_out, Cin, ir, PB);
     
     register_32_bit instruction_register(ir, ram_out, IRld, main_clk);
-    register_32_bit mar(address, alu_out, MARld, main_clk);
+    register_32_bit mar(address, F, MARld, main_clk);
     register_32_bit mdr(mdr_out, E, MDRld, main_clk);
     
-    mux_a mux_a(A, ir[19:16], ir[15:12], SA, MA);
-    mux_b mux_b(B, PB, shift_out, mdr_out, MB);
-    mux_c mux_c(Cp, ir[15:12], ir[19:16], SC, MC);
+    mux_a mux_a(A, ir[19:16], ir[15:12], SA, REG_SEL, MA);
+    mux_b mux_b(B, PB, shift_out, mdr_out, inc_out, MB);
+    mux_c mux_c(Cp, ir[15:12], ir[19:16], SC, REG_SEL, MC);
     mux_d mux_d(op_to_alu, ir[24:21], OP, MD);
     mux_e mux_e(E, ram_out, alu_out, ME);
+    mux_f mux_f(F, alu_out, inc_out, MF);
+
+    address_incrementer address_incrementer(inc_out, address, ir[23]);
     
 endmodule
