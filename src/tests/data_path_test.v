@@ -15,7 +15,7 @@ module data_path_test();
     initial #5000 $finish;
 
     // Starting Test
-    initial $display("\n|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--STARTING DATA PATH TEST--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|");
+    initial $display("\n|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--STARTING DATA PATH TEST--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|");
 
     // Clock
     initial begin
@@ -44,7 +44,7 @@ module data_path_test();
 
     initial begin
 
-        $display("\n    CS        PC         MAR         LR         R1         R2         R4         R5         R7        R10        R12        R13      ALU_OUT           Instruction Register  \t\t ZNCV \t\t       Time");
+        $display("\n    CS        PC         MAR         LR         R1         R2         R4         R5         R7        R10        R12        R13      ALU_OUT           Instruction Register  \t\t ZNCV \t\t     Time");
         $monitor("\n %d %d %d %d %d %d %d %d %d %d %d %d %d  \t %b \t %b",
             current_state,                                  // Current States
             data_path.register_file.reg_to_mult[15],        // PC
@@ -73,7 +73,7 @@ module data_path_test();
 
     end
     //Test Finished
-    initial #5000 $display("\n|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--DATA PATH TEST FINISHED--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|\n");
+    initial #5000 $display("\n|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--DATA PATH TEST FINISHED--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|\n");
 
 
 endmodule
