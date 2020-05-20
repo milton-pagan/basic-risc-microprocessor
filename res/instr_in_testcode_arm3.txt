@@ -1,0 +1,9 @@
+1. Data Processing AND --> R1 & 0 into R0
+2. Data Processing ORR --> R0=0 | #24 into R10
+3. Data Processing ORR S-> R0=0 | #40 into R4  
+4. Load Multiple IA W --> ADDR R10=24, List=[R2 R5 R7 R13]
+5. Store Multiple IA W --> ADDR R10=40, List=[R2 R5 R7 R13] 
+6. Not executed
+7. Data Processing ORR --> R0=0 | #4 into R1
+8. Load Signed Halfword Immediate Offset SUB --> ADDR R4=40 - #6 into R12
+9. Store Immediate Post-Indexed --> ADDR R10=56  + #4 into R12   

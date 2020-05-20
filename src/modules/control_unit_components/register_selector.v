@@ -9,7 +9,7 @@ reg found = 0, visited = 0;
 initial reg_address = 0;
 initial done = 0;
 
-always @ (reg_list, enable)
+always @ (reg_list, enable) begin
   if(enable) begin 
     while(!found && !done) begin
         if((visited && reg_address == 15) || reg_address > 15) begin
@@ -27,7 +27,14 @@ always @ (reg_list, enable)
         if(!found) reg_address++;
     end
 
-    found = 0;
+      found = 0;
   end
+
+  else if (!enable && done) begin
+    done = 0;
+    visited = 0;
+    found = 0;
+  end  
+end
 
 endmodule 
